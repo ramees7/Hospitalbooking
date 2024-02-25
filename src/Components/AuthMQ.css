@@ -1,0 +1,19 @@
+/* @media (max-width:500px){
+    #auth{
+        width: 100%;
+    }
+    #nurse-logo{
+        width: 150px;
+        height: 150px;
+    }
+}
+#nurse-logo{
+    height: 716px;
+} */
+#outlined-basic:-webkit-autofill,
+#outlined-basic:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: #000000;
+    transition: background-color 5000s ease-in-out 0s;
+    box-shadow: inset 0 0 20px 20px gray;
+}

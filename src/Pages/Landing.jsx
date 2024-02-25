@@ -5,17 +5,18 @@ import nurseLogo from '../Assets/nurse.png'
 import hospitalLogo from '../Assets/hospital_logo.png'
 // import { TextField } from '@mui/material';
 import Auth from '../Components/Auth';
+// import '../Components/AuthMQ.css'
 
-function Landing({register}) {
+function Landing({login}) {
 
-  const registerForm = register ? true : false
+  const registerForm = login ? true : false
 
 
   return (
     <div style={{ backgroundColor: "#23b3b4", height: "100%" }}>
       <Row className='gx-0 w-100'>
         <Col md={5} className='d-flex justify-content-center align-items-center mt-5'>
-          <img src={nurseLogo} alt="img nurse" style={{ height: "716px" }} className='img-fluid' />
+          <img src={nurseLogo} alt="img nurse" style={{ height: "716px" }} className='img-fluid' id='nurse-logo'/>
         </Col>
         <Col className='p-5' md={7} >
           {/* <div className='d-flex justify-content-center align-items-center  p-5 'style={{backgroundImage:"url(https://t4.ftcdn.net/jpg/02/45/51/51/360_F_245515156_h2nHzDquKJxygpkOkG4UsMV5So5uh3LF.jpg)", backgroundSize:"800px ", backgroundRepeat:"no-repeat", height:"500px"}} >      */}
@@ -29,12 +30,12 @@ function Landing({register}) {
               <h6 className='d-flex justify-content-center'>TRUS US , WE ARE WITH YOU</h6>
             </div>
           </div>
-          <div style={{ backgroundColor: "#fff" }} className='m-5'>
+          <div style={{ backgroundColor: "" }} className='m-5' id='auth'>
             {
               registerForm?
-              <Auth register/>
+              <Auth />
               :
-              <Auth/>
+              <Auth login />
             }
 
           </div>
