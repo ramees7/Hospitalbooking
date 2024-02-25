@@ -26,7 +26,7 @@ function Landing({login}) {
               <img src={hospitalLogo} alt="hospital-logo" width={105} />
             </div>
             <div className='mt-4' style={{ fontFamily: "Bebas Neue, sans-serif", letterSpacing: "2px" }}>
-              <h1 className='d-flex justify-content-center mb-0' >HOSPITAL NAME</h1>
+              <h1 className='d-flex justify-content-center mb-0' >HOPE WELL</h1>
               <h6 className='d-flex justify-content-center'>TRUS US , WE ARE WITH YOU</h6>
             </div>
           </div>
