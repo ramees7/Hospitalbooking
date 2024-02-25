@@ -5,14 +5,18 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter } from 'react-router-dom';
+import ContextShares from './Context/ContextShares';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <ContextShares>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ContextShares>
+
   </React.StrictMode>
 );
 
