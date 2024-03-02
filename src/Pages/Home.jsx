@@ -10,6 +10,8 @@ import HomeAbout from '../Components/HomeAbout'
 import HomeReview from '../Components/HomeReview'
 import { useNavigate } from 'react-router-dom'
 import { message } from 'antd'
+import HomePlaces from '../Components/HomePlaces'
+import HelpLine from '../Components/HelpLine'
 
 function Home() {
     // const navigate=useNavigate()
@@ -71,6 +73,8 @@ function Home() {
             </div>
             <HomeAbout/>
             <HomeReview/>
+            <HomePlaces/>
+            {/* <HelpLine/> */}
         </div>
         // </div>
     )

@@ -103,7 +103,9 @@ function EditDocter({docters}) {
                             </div>
                             <div className='col-lg-7'>
                                 <input type="text " placeholder='Docter Fee' defaultValue={docters.fee}  onChange={(e)=>setUpdateDocter({...updateDocter,fee:e.target.value})} className='form-control mb-3 rounded' />
-                                <input type="text " placeholder='Working Time' defaultValue={docters.time}  onChange={(e)=>setUpdateDocter({...updateDocter,time:e.target.value})} className='form-control mb-3 rounded ' />
+                                <input type="text " placeholder='Department' defaultValue={docters.department}  onChange={(e)=>setUpdateDocter({...updateDocter,department:e.target.value})} className='form-control mb-3 rounded ' />
+                                <input type="text " placeholder='Education' defaultValue={docters.education}  onChange={(e)=>setUpdateDocter({...updateDocter,education:e.target.value})} className='form-control mb-3 rounded ' />
+                                <input type="text " placeholder='Department' defaultValue={docters.phone}  onChange={(e)=>setUpdateDocter({...updateDocter,phone:e.target.value})} className='form-control mb-3 rounded ' />
                             </div>
                         </div>
                     </form>

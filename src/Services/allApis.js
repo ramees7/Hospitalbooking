@@ -33,8 +33,12 @@ export const getDoctersRequestListApi = async(headers)=>{
     return await commonApi("GET",`${BASE_URL}/admin/getdocterrequest`,'',headers)
 }
 
-export const getDoctersAcceptedApi = async(headers)=>{
-    return await commonApi("GET",`${BASE_URL}/admin/getdocteraccepted`,'',headers)
+// export const getDoctersAcceptedApi = async(headers)=>{
+//     return await commonApi("GET",`${BASE_URL}/admin/getdocteraccepted`,'',headers)
+// }
+
+export const getDoctersAcceptedApi = async(headers,search)=>{
+    return await commonApi("GET",`${BASE_URL}/admin/getdocteraccepted?search=${search}`,'',headers)
 }
 
 // export const getDocterRequestListApi = async(headers)=>{

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import { Link, useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import { addDocterApi } from '../Services/allApis';
+import profileImg from '../Assets/profile.webp'
 
 
 
@@ -106,7 +107,8 @@ function DrApplication() {
         setSelectedDob({
             selectedDate: ""
         })
-        setPreviewImg("https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_640.png")
+        setPreviewImg(profileImg)
+        // setPreviewImg("https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_640.png")
         
     }
 
@@ -122,65 +124,65 @@ function DrApplication() {
                 <div className='p-5 ' >
                     <Row className='gx-0 rounded py-5' style={{ backgroundColor: "black" }}>
                         <Col sm={12} className=' mb-3'>
-                            <h1 className='text-center text-danger'>Application for Docter Vacancy</h1>
+                            <h1 className='text-center fw-bold' style={{color:"#e0e0e0"}}>Application for Docter Vacancy</h1>
                         </Col>
                         <Col md={12} className='d-flex justify-content-center p-4'>
                             <label htmlFor="profile" className='text-center'>
                                 <input type="file" id='profile' style={{ display: "none" }} onChange={(e) => { setDocterDetails({ ...docterDetails, dr_image: e.target.files[0] }) }} />
-                                <img src={previewImg ? previewImg : "https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_640.png"} alt="profile img" style={{ borderRadius: "50%" }} width={"150px"} height={"150px"} />
+                                <img src={previewImg ? previewImg : profileImg} alt="profile img" style={{ borderRadius: "50%" }} width={"150px"} height={"150px"} />
                             </label>
                         </Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4 '>
                             <h5 className='text-light'>First Name : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.firstname} onChange={(e) => setDocterDetails({ ...docterDetails, firstname: e.target.value })} />
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.firstname} onChange={(e) => setDocterDetails({ ...docterDetails, firstname: e.target.value })} />
                         </Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Last Name : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.lastname} onChange={(e) => setDocterDetails({ ...docterDetails, lastname: e.target.value })} />
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.lastname} onChange={(e) => setDocterDetails({ ...docterDetails, lastname: e.target.value })} />
                         </Col>
                         <Col md={1}></Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Phone Number : </h5>
-                            <Form.Control type="number" placeholder="" style={{ height: "50px" }} value={docterDetails.phone} onChange={(e) => setDocterDetails({ ...docterDetails, phone: e.target.value })} />
+                            <Form.Control type="number" placeholder="" style={{ height: "50px", backgroundColor:"#e0e0e0" }} value={docterDetails.phone} onChange={(e) => setDocterDetails({ ...docterDetails, phone: e.target.value })} />
                         </Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Email : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.email} onChange={(e) => setDocterDetails({ ...docterDetails, email: e.target.value })} />
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.email} onChange={(e) => setDocterDetails({ ...docterDetails, email: e.target.value })} />
                         </Col>
                         <Col md={1}></Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Date Of Birth : </h5>
-                            <input type="date" className='rounded ps-3' style={{ width: "100%", height: "50px" }} value={selectedDob} onChange={(e) => setSelectedDob(e.target.value)} />
+                            <input type="date" className='rounded ps-3' style={{ width: "100%", height: "50px" , backgroundColor:"#e0e0e0"}} value={selectedDob} onChange={(e) => setSelectedDob(e.target.value)} />
                             <h6 id='dobid' className='text-danger'></h6>
                             {/* <input type="date" className='rounded ps-3'  style={{ width: "100%", height: "50px" }} value={docterDetails.dob} onChange={(e) => setDocterDetails({ ...docterDetails, dob: e.target.value })} /> */}
                         </Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Your Address : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.address} onChange={(e) => setDocterDetails({ ...docterDetails, address: e.target.value })} />
+                            <Form.Control type="text" placeholder="" style={{ height: "50px", backgroundColor:"#e0e0e0" }} value={docterDetails.address} onChange={(e) => setDocterDetails({ ...docterDetails, address: e.target.value })} />
                         </Col>
                         <Col md={1}></Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Education : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.education} onChange={(e) => setDocterDetails({ ...docterDetails, education: e.target.value })} />
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.education} onChange={(e) => setDocterDetails({ ...docterDetails, education: e.target.value })} />
                         </Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Specialised to : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.department} onChange={(e) => setDocterDetails({ ...docterDetails, department: e.target.value })} />
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.department} onChange={(e) => setDocterDetails({ ...docterDetails, department: e.target.value })} />
                         </Col>
 
                         <Col md={1}></Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Work Experience : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.experience} onChange={(e) => setDocterDetails({ ...docterDetails, experience: e.target.value })} />
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.experience} onChange={(e) => setDocterDetails({ ...docterDetails, experience: e.target.value })} />
                         </Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Consultation fee : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.fee} onChange={(e) => setDocterDetails({ ...docterDetails, fee: e.target.value })} />
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.fee} onChange={(e) => setDocterDetails({ ...docterDetails, fee: e.target.value })} />
                         </Col>
 
 

@@ -43,7 +43,7 @@ function AdminHeader() {
     return (
         <div className='p-2'>
             <div className='d-grid justify-content-center' style={{ paddingTop: "140px" }}>
-                <h4 style={{ color: "red" }}>Admin : {userName}</h4>
+                <h4 style={{ color: "#e0e0e0" }}>Admin : {userName}</h4>
                 <Link to={'/adminpage'} style={{ textDecoration: "none" }}><div className=' py-2 my-2' style={{ backgroundColor: "" }}>
                     <h5 style={{ color: "white" }}><IoMdHome style={{ fontSize: "30px" }}  className='me-1'/><span style={{ position: "relative", top: '3px' }}>Home</span></h5>
                 </div></Link>

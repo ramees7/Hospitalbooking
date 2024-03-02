@@ -61,9 +61,9 @@ function HomeReview() {
     console.log(value);
 
     return (
-        <div className='py-5 ' style={{ backgroundColor: "#23b3b4" }}>
+        <div className='py-5 ' style={{ backgroundColor: "#23b3b4", borderBottom:"2px solid #e0e0e0"}}>
             <div>
-                <h1 className='text-center '>Review</h1>
+                <h1 className='text-center fw-bold'>Review</h1>
                 <div className='d-flex justify-content-center p-5'>
                     <Form >
                         <div className='d-flex px-5'>
@@ -75,7 +75,7 @@ function HomeReview() {
 
                         <Form.Group className="my-3" controlId="exampleForm.ControlTextarea1" >
                             <Form.Label style={{ fontSize: "20px", fontWeight: "500" }}> Your openion</Form.Label>
-                            <Form.Control as="textarea" rows={5} value={reviewDetails.reviewmessage} onChange={(e)=>setReviewDetails({...reviewDetails,reviewmessage:e.target.value})}/>
+                            <Form.Control as="textarea" rows={5} value={reviewDetails.reviewmessage} style={{backgroundColor:"#e0e0e0"}} onChange={(e)=>setReviewDetails({...reviewDetails,reviewmessage:e.target.value})}/>
                         </Form.Group>
                         <Button className='d-flex float-end mb-3' onClick={handleAddReview}>Submit</Button>
                     </Form>
