@@ -21,10 +21,11 @@ function AdminNotification() {
     const [updateDocter,setUpdateDocter]=useState({
         firstname:"", lastname:"", email:"", phone:"", dob:"", address:"", department:"", experience:"", fee:"", time:"",dr_image:"", userId:"", status:""
     })
+    const [docterName,setDocterName]=useState("")
 
 
 
-    useEffect(() => {
+    useEffect(() => {   
         handleDocterList()
         handleAppoinmentList()
     }, [localStorage.getItem("token")])
@@ -51,73 +52,6 @@ function AdminNotification() {
         }
     }
 
-    // const handleAcceptUpdateAppoinemnt=async(item)=>{
-    //     const tokenNumber= Date.now()
-    //     setRejectAcceptUpdateAppoinment({firstname:item.firstname,lastname:item.lastname,phone:item.phone,dob:item.dob,address:item.address,docter:item.docter,dateofbooked:item.dateofbooked,userId:item.userId,status:"Accepted"})
-
-    //     const {firstname,lastname,phone,dob,address,docter,dateofbooked,userId,status}=rejectAcceptUpdateAppoinment
-    //     if(!firstname || !lastname || !phone || !dob || !address || !docter || !dateofbooked || !userId || !status){
-    //         message.warning("Something Went Wrong")
-    //     }
-    //     else{
-    //         const reqBody=new FormData()
-    //         reqBody.append("firstname",firstname)
-    //         reqBody.append("lastname",lastname)
-    //         reqBody.append("phone",phone)
-    //         reqBody.append("dob",dob)
-    //         reqBody.append("address",address)
-    //         reqBody.append("docter",docter)
-    //         reqBody.append("dateofbooked",dateofbooked)
-    //         reqBody.append("userId",userId)
-    //         reqBody.append("status",status)
-    //         const reqHeader={
-    //             "Content-Type":"application/json","Authorization":`bearer ${localStorage.getItem("token")}`
-    //         }
-    //         const res=await appoinemntRejectAcceptUpdateApi(reqBody,reqHeader,item._id)
-    //         console.log(res);
-    //         if(res.status===200){
-    //             message.success("Appoinment Accepted")
-    //             handleAppoinmentList()
-    //         }
-    //         else{
-    //             message.error("Failed")
-    //         }
-    //     }
-    // }
-
-    // const handleRejectUpdateAppoinment=async(item)=>{
-    //     setRejectAcceptUpdateAppoinment({firstname:item.firstname,lastname:item.lastname,phone:item.phone,dob:item.dob,address:item.address,docter:item.docter,dateofbooked:item.dateofbooked,userId:item.userId,status:"Rejected"})
-
-    //     const {firstname,lastname,phone,dob,address,docter,dateofbooked,userId,status}=rejectAcceptUpdateAppoinment
-    //     if(!firstname || !lastname || !phone || !dob || !address || !docter || !dateofbooked || !userId  || !status){
-    //         message.warning("Something Went Wrong")
-    //     }
-    //     else{
-    //         const reqBody=new FormData()
-    //         reqBody.append("firstname",firstname)
-    //         reqBody.append("lastname",lastname)
-    //         reqBody.append("phone",phone)
-    //         reqBody.append("dob",dob)
-    //         reqBody.append("address",address)
-    //         reqBody.append("docter",docter)
-    //         reqBody.append("dateofbooked",dateofbooked)
-    //         reqBody.append("userId",userId)
-    //         reqBody.append("status",status)
-    //         const reqHeader={
-    //             "Content-Type":"application/json","Authorization":`bearer ${localStorage.getItem("token")}`
-    //         }
-    //         const res=await appoinemntRejectAcceptUpdateApi(reqBody,reqHeader,item._id)
-    //         console.log(res);
-    //         if(res.status===200){
-    //             message.success("Appoinment Rejected")
-    //             handleAppoinmentList()
-    //         }
-    //         else{
-    //             message.error("Failed")
-    //         }
-    //     }
-    // }
-    // console.log(rejectAcceptUpdateAppoinment);
 
     const handleDeleteAppoinemntList =async(item)=>{
         const reqHeader={
@@ -229,6 +163,7 @@ function AdminNotification() {
     }
 
 
+
     console.log(docterRequestList);
 
 
@@ -271,7 +206,6 @@ function AdminNotification() {
                                                 <td>{item.phone}</td>
                                                 <td>{item.dob.slice(0,10)}</td>
                                                 <td>{item.tokenNo}</td>
-                                                {/* <td>{item.tokenNo}</td>  */}
                                                 <td className='d-flex justify-content-evenly'><Button  style={{ backgroundColor: "#aa0000", border: "none" }}  onClick={()=>handleDeleteAppoinemntList(item)}><MdDeleteOutline /></Button></td>
                                                 {/* <td className='d-flex justify-content-evenly'><Button style={{ backgroundColor: "green", border: "none" }} onClick={()=>handleAcceptUpdateAppoinemnt(item)}><TiTick /></Button><Button style={{ backgroundColor: "red", border: "none" }}  onClick={()=>handleRejectUpdateAppoinment(item)}><FaXmark /></Button><Button  style={{ backgroundColor: "#aa0000", border: "none" }}  onClick={()=>handleDeleteAppoinemntList(item)}><MdDeleteOutline /></Button></td> */}
                                             </tr>

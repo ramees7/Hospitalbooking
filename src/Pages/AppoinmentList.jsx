@@ -45,7 +45,7 @@ function AppoinmentList() {
         <div>
             <Header />
             <div style={{ backgroundColor: "#23b3b4", height: "", paddingTop: "110px" }} className='px-5 pb-5'>
-                <h1 className='text-center my-5'>Your Appoinments</h1>
+                <h1 className='text-center my-5 fw-bold'>Your Appoinments</h1>
                 <Table responsive striped bordered hover variant="dark" className='mb-5'>
                     <thead >
                         <tr >

@@ -13,18 +13,19 @@ import { docterEditResContext } from '../Context/ContextShares';
 function AdminBody() {
     const [docterList, setDocterList] = useState("")
     const {docterEditRes,setDocterEditRes}=useContext(docterEditResContext)
+    const [search,setSearch]=useState("")
 
 
     useEffect(() => {
         handleDocterList()
-    }, [localStorage.getItem("token"),docterEditRes])
+    }, [localStorage.getItem("token"),docterEditRes,search])
 
     const handleDocterList = async () => {
         const reqHeader = {
             "Content-Type": "application/json", "Authorization": `bearer ${localStorage.getItem("token")}`
         }
         console.log(reqHeader)
-        const res = await getDoctersAcceptedApi(reqHeader)
+        const res = await getDoctersAcceptedApi(reqHeader,search)
         if (res.status === 200) {
             setDocterList(res.data)
         }
@@ -75,6 +76,9 @@ function AdminBody() {
             <div style={{ marginTop: "100px" }} className=''>
                 <h1 className='text-center pt-5'>Docters List</h1>
                 <Row className='d-flex justify-content-start gx-0 '>
+                <Col xs={12} className='d-flex justify-content-center my-3 '>
+                    <input type="text" className='mx-5 w-50 form-control' style={{backgroundColor:"#e0e0e0"}} placeholder='Search Docter or Department' onChange={(e)=>{setSearch(e.target.value)}}/>
+                </Col>
                     {
                         docterList ?
                             docterList.map(item => (
@@ -86,7 +90,7 @@ function AdminBody() {
 
                                         </div>
                                         <Card.Img variant="top" src={`${BASE_URL}/upload/${item.dr_image}`} className='img-fluid' style={{ height: "200px"}} />
-                                        <Card.Body>
+                                        <Card.Body style={{backgroundColor:"#e0e0e0"}}>
                                             <Card.Title className='text-center'>{item.fistname} {item.lastname}</Card.Title>
                                             <Card.Text className='px-4'>
                                                 <h6><span className='fw-bold'>Department : </span>{item.department}</h6>

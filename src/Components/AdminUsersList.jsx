@@ -48,7 +48,7 @@ function AdminUsersList() {
         const res = await deleteAdminListApi(item._id,reqHeader)
         console.log(res);
         if(res.status===200){
-            message.success("Docter Application Deleted")
+            message.success("Admin Deleted")
             handleAdminsList()
         }
         else{
@@ -64,7 +64,7 @@ function AdminUsersList() {
         const res = await deleteUserListApi(item._id,reqHeader)
         console.log(res);
         if(res.status===200){
-            message.success("Docter Application Deleted")
+            message.success("User Deleted")
             handleUsersList()
         }
         else{

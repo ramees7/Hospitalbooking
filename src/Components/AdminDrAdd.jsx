@@ -80,7 +80,7 @@ function AdminDrAdd() {
             const reqHeader = {
                 "Content-Type": "multipart/form-data", "Authorization":`bearer ${token}`
             }
-            console.log(reqHeader);
+            console.log(reqHeader)
             const result = await addDocterApi(docterData,reqHeader)
             console.log(result,"res")
             if (result.status === 200) {
@@ -117,7 +117,7 @@ function AdminDrAdd() {
                 <div className='p-5 ' >
                     <Row className='gx-0 rounded py-5' style={{ backgroundColor: "black" }}>
                         <Col sm={12} className=' mb-3'>
-                            <h1 className='text-center text-danger'>Application for Docter Vacancy</h1>
+                            <h1 className='text-center ' style={{color:"#e0e0e0"}}>Application for Docter Vacancy</h1>
                         </Col>
                         <Col md={12} className='d-flex justify-content-center p-4'>
                             <label htmlFor="profile" className='text-center'>

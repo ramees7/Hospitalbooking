@@ -22,6 +22,7 @@ function Booking({ drItem }) {
     const [appoinmentDetails, setAppoinmentDetails] = useState({
         firstname: "", lastname: "", phone: "", dob: "", address: "", docter: "", dateofbooked: "", userId: "", tokenNo: ""
     })
+    const [search,setSearch]=useState("")
 
     const [docterList, setDocterList] = useState("")
     // const tokenNumber= Date.now()
@@ -42,7 +43,7 @@ function Booking({ drItem }) {
             "Content-Type": "application/json", "Authorization": `bearer ${token}`
         }
         console.log(reqHeader)
-        const res = await getDoctersAcceptedApi(reqHeader)
+        const res = await getDoctersAcceptedApi(reqHeader,search)
         if (res.status === 200) {
             setDocterList(res.data)
         }
@@ -135,16 +136,16 @@ function Booking({ drItem }) {
         <div>
             <Header />
             <div style={{ height: "", backgroundColor: "#23b3b4", paddingTop: "110px", position: "" }} className=''>
-                <div className='px-5 mb-5' style={{ borderBottom: "2px solid green" }}>
+                <div className='px-5 mb-5' style={{ borderBottom: "2px solid #e0e0e0" }}>
                     {
                         docterSpecifedBooking ?
                             <div className='p-5  ' >
-                                <h1 style={{ color: "#000", textTransform: "uppercase" }} className='pb-5 text-center'>Dr.{drItem.firstname} {drItem.lastname} <span style={{ fontSize: "20px", textTransform: "lowercase" }}>{drItem.education}</span></h1>
+                                <h1 style={{ color: "#000", textTransform: "uppercase" }} className='pb-5 text-center fw-bold'>Dr.{drItem.firstname} {drItem.lastname} <span style={{ fontSize: "20px", textTransform: "lowercase" }}>{drItem.education}</span></h1>
                                 <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, consequatur cupiditate nobis praesentium commodi officiis dolore vero, fuga dolorem adipisci unde obcaecati? At magnam temporibus natus, facere ipsum vel modi. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo laborum fugiat quibusdam mollitia pariatur omnis libero quia beatae enim accusantium, neque cupiditate. Quod modi error quaerat placeat eum veniam eaque. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa sequi consequuntur ipsum esse doloribus, molestias dolorum ea sit aspernatur nemo nihil sint accusamus, harum expedita veniam ab ratione quas? Quisquam.</h6>
                             </div>
                             :
                             <div className='p-5  ' >
-                                <h1 style={{ color: "blue" }} className='pb-5 text-center'>Online Appoinments</h1>
+                                <h1 style={{ color: "#000" }} className='pb-5 text-center fw-bold'>Online Appoinments</h1>
                                 <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, consequatur cupiditate nobis praesentium commodi officiis dolore vero, fuga dolorem adipisci unde obcaecati? At magnam temporibus natus, facere ipsum vel modi. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo laborum fugiat quibusdam mollitia pariatur omnis libero quia beatae enim accusantium, neque cupiditate. Quod modi error quaerat placeat eum veniam eaque. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa sequi consequuntur ipsum esse doloribus, molestias dolorum ea sit aspernatur nemo nihil sint accusamus, harum expedita veniam ab ratione quas? Quisquam.</h6>
                             </div>
                     }
@@ -153,26 +154,26 @@ function Booking({ drItem }) {
                 <div className='p-5 ' >
                     <Row className='gx-0 rounded py-5' style={{ backgroundColor: "black" }}>
                         <Col sm={12} className=' mb-3'>
-                            <h1 className='text-center text-danger'>Appoinments Booking</h1>
+                            <h1 className='text-center  fw-bold' style={{color:"#e0e0e0"}}>Appoinments Booking</h1>
                         </Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4 '>
                             <h5 className='text-light'>First Name : </h5>
-                            <Form.Control type="text" name='firstname' placeholder="" style={{ height: "50px" }} value={appoinmentDetails.firstname} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, firstname: e.target.value })} />
+                            <Form.Control type="text" name='firstname' placeholder="" style={{ height: "50px", backgroundColor:"#e0e0e0"}} value={appoinmentDetails.firstname} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, firstname: e.target.value })} />
                         </Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Last Name : </h5>
-                            <Form.Control type="text" name='lastname' placeholder="" style={{ height: "50px" }} value={appoinmentDetails.lastname} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, lastname: e.target.value })} />
+                            <Form.Control type="text" name='lastname' placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={appoinmentDetails.lastname} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, lastname: e.target.value })} />
                         </Col>
                         <Col md={1}></Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Phone Number : </h5>
-                            <Form.Control type="number" name='phone' placeholder="" style={{ height: "50px" }} value={appoinmentDetails.phone} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, phone: e.target.value })} />
+                            <Form.Control type="number" name='phone' placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={appoinmentDetails.phone} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, phone: e.target.value })} />
                         </Col>
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Date Of Birth : </h5>
-                            <input type="date" className='rounded ps-3' name='dob' style={{ width: "100%", height: "50px" }} value={selectedDob} onChange={(e) => setSelectedDob(e.target.value)} />
+                            <input type="date" className='rounded ps-3' name='dob' style={{ width: "100%", height: "50px" , backgroundColor:"#e0e0e0"}} value={selectedDob} onChange={(e) => setSelectedDob(e.target.value)} />
                             <h6 className='text-danger' id='dobid'></h6>
                             {/* <input type="date" className='rounded ps-3' name='dob' style={{ width: "100%", height: "50px" }} value={appoinmentDetails.dob} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, dob: e.target.value })} /> */}
 
@@ -181,7 +182,7 @@ function Booking({ drItem }) {
                         <Col md={1}></Col>
                         <Col md={10} className='p-4'>
                             <h5 className='text-light'>Your Address : </h5>
-                            <Form.Control type="text" placeholder="" name='address' style={{ height: "50px" }} value={appoinmentDetails.address} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, address: e.target.value })} />
+                            <Form.Control type="text" placeholder="" name='address' style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={appoinmentDetails.address} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, address: e.target.value })} />
                         </Col>
                         <Col md={1}></Col>
                         <Col md={1}></Col>
@@ -189,20 +190,20 @@ function Booking({ drItem }) {
                             docterSpecifedBooking ?
                                 <Col md={5} className='p-4'>
                                     <h5 className='text-light'>Select Your Docter : </h5>
-                                    <Form.Select aria-label="" style={{ height: "50px" }} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, docter: e.target.value })}>
-                                        <option value={""}>Select Your Docter</option>
-                                        <option value={drItem._id}>{drItem.firstname} {drItem.lastname}</option>
+                                    <Form.Select aria-label="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, docter: e.target.value })}>
+                                        <option value={""} style={{ backgroundColor:"#e0e0e0"}}>Select Your Docter</option>
+                                        <option value={drItem._id} style={{ backgroundColor:"#e0e0e0"}}>{drItem.firstname} {drItem.lastname}</option>
                                     </Form.Select>
                                 </Col>
                                 :
                                 <Col md={5} className='p-4'>
                                     <h5 className='text-light'>Select Your Docter : </h5>
-                                    <Form.Select aria-label="" name='docter' style={{ height: "50px" }} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, docter: e.target.value })}>
-                                        <option value={""}>Select Your Docter</option>
+                                    <Form.Select aria-label="" name='docter' style={{ height: "50px" , backgroundColor:"#e0e0e0"}} onChange={(e) => setAppoinmentDetails({ ...appoinmentDetails, docter: e.target.value })}>
+                                        <option value={""} style={{backgroundColor:"#e0e0e0"}}>Select Your Docter</option>
                                         {
                                             docterList ?
                                                 docterList.map(item => (
-                                                    <option value={item._id} key={item._id} >{item.firstname} {item.lastname}</option>
+                                                    <option value={item._id} key={item._id} style={{backgroundColor:"#e0e0e0"}}>{item.firstname} {item.lastname}</option>
                                                 ))
                                                 : ''
                                         }
@@ -211,7 +212,7 @@ function Booking({ drItem }) {
                         }
                         <Col md={5} className='p-4'>
                             <h5 className='text-light'>Date of Booking: </h5>
-                            <input type="date" name='dateofbooked' className='rounded ps-3' style={{ width: "100%", height: "50px" }} value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+                            <input type="date" name='dateofbooked' className='rounded ps-3' style={{ width: "100%", height: "50px" , backgroundColor:"#e0e0e0"}} value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
                             <h6 className='text-danger' id='dateid'></h6>
                         </Col>
                         <Col md={1}></Col>

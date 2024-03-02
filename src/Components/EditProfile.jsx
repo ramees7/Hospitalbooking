@@ -14,7 +14,7 @@ function EditProfile() {
     const [profile, setProfile] = useState({
         // username:"", email:"", password:"", phone:"", firstname:"", lastname:"", dob:"", gender:"", address:"", user_image:""
         username: JSON.parse(localStorage.getItem("currentUser")).username, email: JSON.parse(localStorage.getItem("currentUser")).email, password: JSON.parse(localStorage.getItem("currentUser")).password,
-        phone: JSON.parse(localStorage.getItem("currentUser")).phone, firstname: JSON.parse(localStorage.getItem("currentUser")).firstname, lastname: JSON.parse(localStorage.getItem("currentUser")).lastname, dob: JSON.parse(localStorage.getItem("currentUser")).dob,
+        phone: JSON.parse(localStorage.getItem("currentUser")).phone, firstname: JSON.parse(localStorage.getItem("currentUser")).firstname, lastname: JSON.parse(localStorage.getItem("currentUser")).lastname,
         gender: JSON.parse(localStorage.getItem("currentUser")).gender, address: JSON.parse(localStorage.getItem("currentUser")).address, user_image: JSON.parse(localStorage.getItem("currentUser")).user_image
     })
 
@@ -34,9 +34,9 @@ function EditProfile() {
     console.log(preview);
 
     const handleProfileUpdate = async () => {
-        const { username, email, password, phone, firstname, lastname, dob, gender, address, user_image } = profile
+        const { username, email, password, phone, firstname, lastname, gender, address, user_image } = profile
         // console.log(profile);
-        // const today = new Date(); // Current date
+        const today = new Date(); // Current date
         // // const dobObject=new Date(selectedDob)
         // // console.log(dobObject,"dobObject");
         // if(profile.dob < today){
@@ -50,7 +50,7 @@ function EditProfile() {
         //     document.getElementById("dobid").innerHTML = "Wrong Date Selection"
 
         // }
-        if (!username || !email || !password || !phone || !firstname || !lastname || !dob || !gender || !address || !user_image) {
+        if (!username || !email || !password || !phone || !firstname || !lastname || !gender || !address || !user_image) {
             message.warning("Enter Valid Data")
         }
         else {
@@ -61,7 +61,7 @@ function EditProfile() {
             reqBody.append('phone', phone)
             reqBody.append('firstname', firstname)
             reqBody.append('lastname', lastname)
-            reqBody.append('dob', dob)
+            // reqBody.append('dob', dob )
             reqBody.append('gender', gender)
             reqBody.append('address', address)
             reqBody.append('user_image', user_image)
@@ -121,8 +121,8 @@ function EditProfile() {
                         <input type="text" className='rounded px-3 border-0 mb-2' style={{ height: "40px" }} onChange={(e) => setProfile({ ...profile, lastname: e.target.value })} defaultValue={profile.lastname} />
                         <h6 style={{ color: "white" }}>Username :</h6>
                         <input type="text" className='rounded px-3 border-0 mb-2' style={{ height: "40px" }} onChange={(e) => setProfile({ ...profile, username: e.target.value })} defaultValue={profile.username} />
-                        <h6 style={{ color: "white" }} >D.O.B :</h6>
-                        <input type="date" className='rounded px-3 border-0 mb-2' style={{ height: "40px" }} onChange={(e) => setProfile({ ...profile, dob: e.target.value })} defaultValue={profile.dob} />
+                        {/* <h6 style={{ color: "white" }} >D.O.B :</h6>
+                        <input type="date" className='rounded px-3 border-0 mb-2' style={{ height: "40px" }} onChange={(e) => setProfile({ ...profile, dob: e.target.value })} defaultValue={profile.dob} /> */}
                         {/* <h6 className='text-danger' id='dobid'></h6> */}
                         <h6 style={{ color: "white" }}>Gender :</h6>
                         <Form.Select aria-label="" style={{ height: "40px" }} className='rounded px-3 border-0 mb-2 ' onChange={(e) => setProfile({ ...profile, gender: e.target.value })} defaultValue={profile.gender}>
@@ -134,7 +134,7 @@ function EditProfile() {
                         <h6 style={{ color: "white" }}>Email</h6>
                         <input type="text" className='rounded px-3 border-0 mb-2' style={{ height: "40px" }} onChange={(e) => setProfile({ ...profile, email: e.target.value })} defaultValue={profile.email} />
                         <h6 style={{ color: "white" }}>Phone :</h6>
-                        <input type="text" className='rounded px-3 border-0 mb-2' style={{ height: "40px" }} onChange={(e) => setProfile({ ...profile, phone: e.target.value })} defaultValue={profile.phone} />
+                        <input type="number" className='rounded px-3 border-0 mb-2' style={{ height: "40px" }} onChange={(e) => setProfile({ ...profile, phone: e.target.value })} defaultValue={profile.phone} />
                         <h6 style={{ color: "white" }}>Address :</h6>
                         <input type="text" className='rounded px-3 border-0 mb-2' style={{ height: "40px" }} onChange={(e) => setProfile({ ...profile, address: e.target.value })} defaultValue={profile.address} />
                         <div className='d-flex justify-content-center mt-3'>

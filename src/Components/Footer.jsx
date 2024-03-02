@@ -11,9 +11,9 @@ import playStore from '../Assets/playstore-removebg-preview.png'
 
 function Footer() {
   return (
-    <div style={{ backgroundColor: "gray", height: "100%" }} >
+    <div style={{ backgroundColor: "#e0e0e0", height: "100%" }} >
       <Row style={{ height: "100%" }} className='gx-0 '>
-        <Col md={6} style={{ backgroundColor: "", height: "", borderBottom: "2px solid #23b3b48f" }} className='d-flex justify-content-center align-items-center flex-column p-5'>
+        <Col md={6} style={{ borderBottom: "2px solid #23b3b48f" }} className='d-flex justify-content-center align-items-center flex-column p-5'>
           <img src={hospitalLogo} alt="" width={150} />
           {/* <img src="https://static.vecteezy.com/system/resources/thumbnails/021/809/795/small/doctors-day-illustration-png.png" alt="" width={100}/>  */}
           <h1 style={{ fontFamily: "Bebas Neue, sans-serif", letterSpacing: "4px", fontSize: "50px" , color:"black"}} className='mb-0'>HOPE WELL</h1>
@@ -25,7 +25,7 @@ function Footer() {
             <img src={instagramIcon} alt="" width={25} className='mx-2' />
           </div>
         </Col>
-        <Col md={6}>
+        <Col md={6} style={{ borderBottom: "2px solid #23b3b48f" }}>
           <Row>
             <Col xs={4} style={{borderRight:"1px solid #23b3b48f"}} className='ps-3'>
               <div className='d-grid justify-content-center  mb-5' style={{ marginTop: "80px" }}>

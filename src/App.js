@@ -21,23 +21,27 @@ import UserNotifications from './Components/UserNotifications';
 import { useEffect, useState } from 'react';
 import { getAppoinmentsListApi, getDoctersAcceptedApi } from './Services/allApis';
 import EditProfile from './Components/EditProfile';
+import AdminDocterBookinglist from './Components/AdminDocterBookinglist';
+import HelpLine from './Components/HelpLine';
 
 
 function App() {
 
 
   const [docterList, setDocterList] = useState("")
+  const [search,setSearch]=useState("")
+
 
   useEffect(() => {
       handleDocterList()
-  }, [localStorage.getItem("token")])
+  }, [localStorage.getItem("token"),search])
 
   const handleDocterList = async () => {
       const reqHeader = {
           "Content-Type": "application/json", "Authorization": `bearer ${localStorage.getItem("token")}`
       }
       console.log(reqHeader)
-      const res = await getDoctersAcceptedApi(reqHeader)
+      const res = await getDoctersAcceptedApi(reqHeader,search)
       if (res.status === 200) {
           setDocterList(res.data)
       }
@@ -98,6 +102,8 @@ function App() {
             : ""
         }
       <Route path='/editprofile' element={<EditProfile/>}/>
+      {/* <Route path='/loading' element={<HelpLine/>}/> */}
+      {/* <Route path='/dummy' element={<AdminDocterBookinglist/>}/> */}
       </Routes>
       <Footer />
       <ToastContainer />
