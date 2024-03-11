@@ -44,18 +44,18 @@ function AppoinmentList() {
     return (
         <div>
             <Header />
-            <div style={{ backgroundColor: "#23b3b4", height: "", paddingTop: "110px" }} className='px-5 pb-5'>
-                <h1 className='text-center my-5 fw-bold'>Your Appoinments</h1>
+            <div style={{ backgroundColor: "#fff", height: "", paddingTop: "110px" }} className='px-5 pb-5'>
+                <h1 className='text-center my-5 fw-bold' style={{ fontSize: "clamp(1.25rem, 0.6944rem + 2.2222vw, 2.5rem)"}}>Your Appoinments</h1>
                 <Table responsive striped bordered hover variant="dark" className='mb-5'>
                     <thead >
                         <tr >
-                            <th className='py-3'>#</th>
-                            <th className='py-3'>Date of Booked</th>
-                            <th className='py-3'>Docter Name</th>
-                            <th className='py-3'>Phone Number</th>
-                            <th className='py-3'>D.O.B</th>
-                            <th className='py-3'>Token No</th>
-                            <th className='py-3'>Cancel </th>
+                            <th className='py-3 text-center'  style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>#</th>
+                            <th className='py-3 text-center'  style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Date of Booked</th>
+                            <th className='py-3 text-center'  style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Docter Name</th>
+                            <th className='py-3 text-center'  style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Phone Number</th>
+                            <th className='py-3 text-center'  style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>D.O.B</th>
+                            <th className='py-3 text-center'  style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Token No</th>
+                            <th className='py-3 text-center'  style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Cancel </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,15 +63,14 @@ function AppoinmentList() {
                             appoinmentListUser ?
                                 appoinmentListUser.map((item, index) => (
                                     <tr key={item._id}>
-                                        <td>{index+1}</td>
-                                        <td>{item.dateofbooked.slice(0,10)}</td>
-                                        <td>{item.docter}</td>
-                                        <td>{item.phone}</td>
-                                        <td>{item.dob.slice(0,10)}</td>
-                                        <td>{item.tokenNo}</td>
+                                        <td  style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{index+1}</td>
+                                        <td  style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.dateofbooked.slice(0,10)}</td>
+                                        <td  style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.docter}</td>
+                                        <td  style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.phone}</td>
+                                        <td  style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.dob.slice(0,10)}</td>
+                                        <td  style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.tokenNo}</td>
                                         <td className='d-flex justify-content-evenly'><Button  style={{ backgroundColor: "#aa0000", border: "none" }}  onClick={()=>handleDeleteAppoinemntList(item)}><MdDeleteOutline /></Button></td>
 
-                                        {/* <td onClick={handleDeleteAppoinemntList()}></td> */}
                                     </tr>
                                 ))
                                 : ""

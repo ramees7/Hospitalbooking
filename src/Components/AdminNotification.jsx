@@ -1,34 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import hospitalLogo from '../Assets/hospital_logo.png'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Col, Row, Table } from 'react-bootstrap'
 import AdminHeader from './AdminHeader'
 import { TiTick } from "react-icons/ti";
 import { FaXmark } from "react-icons/fa6";
 import AdminNavbar from './AdminNavbar';
-import {  appoinemntRejectAcceptUpdateApi, appoinmentDeleteListApi, doctersDeleteListApi, doctersRejectAcceptUpdateApi, getAppoinmentsListApi, getDoctersRequestListApi } from '../Services/allApis';
+import {  appoinmentDeleteListApi, doctersDeleteListApi, doctersRejectAcceptUpdateApi, getAppoinmentsListApi, getDoctersRequestListApi, pushDepartmentApi } from '../Services/allApis';
 import { message } from 'antd';
 import { MdDeleteOutline } from "react-icons/md";
+import { docterEditResContext } from '../Context/ContextShares';
 
 
 function AdminNotification() {
+    const {docterEditRes,setDocterEditRes}=useContext(docterEditResContext)
 
     const [docterRequestList, setDocterRequestList] = useState("")
     const [appoinmentRequestList, setAppoinmentRequestList] = useState("")
-    // const [rejectAcceptUpdateAppoinment,setRejectAcceptUpdateAppoinment]=useState({
-    //     firstname:"",lastname:"",phone:"",dob:"",address:"",docter:"",dateofbooked:"",userId:"",status:""
-    // })
 
-    const [updateDocter,setUpdateDocter]=useState({
-        firstname:"", lastname:"", email:"", phone:"", dob:"", address:"", department:"", experience:"", fee:"", time:"",dr_image:"", userId:"", status:""
+    const [updateDocter, setUpdateDocter] = useState({
+        firstname: "", lastname: "", email: "", phone: "", dob: "", address: "", department: "",education:"", experience: "", fee: "", time: "", dr_image: "", userId: "", status: ""
     })
-    const [docterName,setDocterName]=useState("")
 
 
-
-    useEffect(() => {   
+    useEffect(() => {
         handleDocterList()
         handleAppoinmentList()
     }, [localStorage.getItem("token")])
+
+
 
     const handleDocterList = async () => {
         const reqHeader = {
@@ -53,111 +51,97 @@ function AdminNotification() {
     }
 
 
-    const handleDeleteAppoinemntList =async(item)=>{
-        const reqHeader={
-            "Content-Type": "application/json","Authorization": `bearer ${localStorage.getItem("token")}`
+    const handleDeleteAppoinemntList = async (item) => {
+        const reqHeader = {
+            "Content-Type": "application/json", "Authorization": `bearer ${localStorage.getItem("token")}`
         }
-        console.log(reqHeader,"dfsdfsdgsg");
+        console.log(reqHeader, "dfsdfsdgsg");
         console.log(item._id);
-        const res = await appoinmentDeleteListApi(item._id,reqHeader)
+        const res = await appoinmentDeleteListApi(item._id, reqHeader)
         console.log(res);
-        if(res.status===200){
+        if (res.status === 200) {
             message.success("Appoinment Deleted")
             handleAppoinmentList()
         }
-        else{
+        else {
             message.error("Failed")
         }
     }
 
-
-    const handleAcceptUpdateDocter=async(item)=>{
-        setUpdateDocter({firstname:item.firstname, lastname:item.lastname, email:item.email, phone:item.phone, dob:item.dob, address:item.address, department:item.department, experience:item.experience, fee:item.fee,dr_image:item.dr_image, userId:item.userId, status:"Accepted"})
-
-        const {firstname, lastname, email, phone, dob, address, department, experience, fee,dr_image, userId, status}=updateDocter
-        if(!firstname || !lastname || !email || !phone || !dob || !address || !department || !experience || !fee || !dr_image|| !userId || !status){
-            message.warning("Something Went Wrong")
+    // -------------------------------------department---------------------------------------------------
+    const selectedDept = updateDocter.department.slice(-24)
+    console.log(selectedDept);
+    const handlePushDeptData = async (reqBody) => {
+        const reqHeader = {
+            "Content-Type": "multipart/form-data", "Authorization": `bearer ${localStorage.getItem("token")}`
         }
-        else{
-            const reqBody=new FormData()
-            reqBody.append("firstname",firstname)
-            reqBody.append("lastname",lastname)
-            reqBody.append("email",email)
-            reqBody.append("phone",phone)
-            reqBody.append("dob",dob)
-            reqBody.append("address",address)
-            reqBody.append("department",department)
-            reqBody.append("experience",experience)
-            reqBody.append("fee",fee)
-            reqBody.append("dr_image",dr_image)
-            reqBody.append("userId",userId)
-            reqBody.append("status",status)
-
-            const reqHeader={
-                "Content-Type":"application/json","Authorization":`bearer ${localStorage.getItem("token")}`
-            }
-            const res=await doctersRejectAcceptUpdateApi(reqBody,reqHeader,item._id)
-            console.log(res);
-            if(res.status===200){
-                message.success("Appoinment Accepted")
-                handleDocterList()
-            }
-            else{
-                message.error("Failed")
-            }
-        }
-    }
-    const handleRejectUpdateDocter=async(item)=>{
-        setUpdateDocter({firstname:item.firstname, lastname:item.lastname, email:item.email, phone:item.phone, dob:item.dob, address:item.address, department:item.department, experience:item.experience, fee:item.fee,dr_image:item.dr_image, userId:item.userId, status:"Rejected"})
-
-        const {firstname, lastname, email, phone, dob, address, department, experience, fee,dr_image, userId, status}=updateDocter
-        if(!firstname || !lastname || !email || !phone || !dob || !address || !department || !experience || !fee  || !dr_image || !userId || !status){
-            message.warning("Something Went Wrong")
-        }
-        else{
-            const reqBody=new FormData()
-            reqBody.append("firstname",firstname)
-            reqBody.append("lastname",lastname)
-            reqBody.append("email",email)
-            reqBody.append("phone",phone)
-            reqBody.append("dob",dob)
-            reqBody.append("address",address)
-            reqBody.append("department",department)
-            reqBody.append("experience",experience)
-            reqBody.append("fee",fee)
-            reqBody.append("dr_image",dr_image)
-            reqBody.append("userId",userId)
-            reqBody.append("status",status)
-
-            const reqHeader={
-                "Content-Type":"application/json","Authorization":`bearer ${localStorage.getItem("token")}`
-            }
-            const res=await doctersRejectAcceptUpdateApi(reqBody,reqHeader,item._id)
-            console.log(res);
-            if(res.status===200){
-                message.success("Appoinment Rejected")
-                handleDocterList()
-            }
-            else{
-                message.error("Failed")
-            }
-        }
-    }
-
-
-    const handleDeleteDoctersList =async(item)=>{
-        const reqHeader={
-            "Content-Type": "application/json","Authorization": `bearer ${localStorage.getItem("token")}`
-        }
-        console.log(reqHeader,"dfsdfsdgsg");
-        console.log(item._id);
-        const res = await doctersDeleteListApi(item._id,reqHeader)
+        const res = await pushDepartmentApi(selectedDept, reqBody, reqHeader)
         console.log(res);
-        if(res.status===200){
+        if (res.status === 200) {
+            console.log(res);
+            // message.success("New Department Added")
+        }
+        else {
+            // message.error("Failed")
+            console.log(res);
+        }
+    }
+        // -------------------------------------department---------------------------------------------------
+
+
+    const handleAcceptUpdateDocter = async (item) => {
+            setUpdateDocter({ firstname: item.firstname, lastname: item.lastname, email: item.email, phone: item.phone, dob: item.dob, address: item.address,education:item.education, department: item.department, experience: item.experience, fee: item.fee, dr_image: item.dr_image, userId: item.userId, status: "Accepted" })
+
+            const { firstname, lastname, email, phone, dob, address, department,education, experience, fee, dr_image, userId, status } = updateDocter
+            if (!firstname || !lastname || !email || !phone || !dob || !address || !department || !education|| !experience || !fee || !dr_image || !userId || !status ) {
+                message.warning("Something Went Wrong")
+            }
+            else {
+                const reqBody = new FormData()
+                reqBody.append("firstname", firstname)
+                reqBody.append("lastname", lastname)
+                reqBody.append("email", email)
+                reqBody.append("phone", phone)
+                reqBody.append("dob", dob)
+                reqBody.append("address", address)
+                reqBody.append("department", department)
+                reqBody.append("experience", experience)
+                reqBody.append("education", education)
+                reqBody.append("fee", fee)
+                reqBody.append("dr_image", dr_image)
+                reqBody.append("userId", userId)
+                reqBody.append("status", status)
+    
+                const reqHeader = {
+                    "Content-Type": "application/json", "Authorization": `bearer ${localStorage.getItem("token")}`
+                }
+                    const res = await doctersRejectAcceptUpdateApi(reqBody, reqHeader, item._id)
+                    console.log(res);
+                    if (res.status === 200) {
+                        message.success("Application Accepted")
+                        handleDocterList()
+                        handlePushDeptData(reqBody)
+                        setDocterEditRes(res.data)
+                    }
+                    else {
+                        message.error("Failed")
+                    }
+        }
+    }
+ 
+    const handleDeleteDoctersList = async (item) => {
+        const reqHeader = {
+            "Content-Type": "application/json", "Authorization": `bearer ${localStorage.getItem("token")}`
+        }
+        console.log(reqHeader, "dfsdfsdgsg");
+        console.log(item._id);
+        const res = await doctersDeleteListApi(item._id, reqHeader)
+        console.log(res);
+        if (res.status === 200) {
             message.success("Docter Application Deleted")
             handleDocterList()
         }
-        else{
+        else {
             message.error("Failed")
         }
     }
@@ -174,60 +158,58 @@ function AdminNotification() {
                 <Col md={2} xs={4} style={{ backgroundColor: "black" }}>
                     <AdminHeader />
                 </Col>
-                <Col md={10} xs={8} style={{ backgroundColor: "#23b3b4" }}>
-                    <div style={{ backgroundColor: "#23b3b4", paddingTop: "110px" }} className='px-3'>
+                <Col md={10} xs={8} style={{ backgroundColor: "#fff" }}>
+                    <div style={{ backgroundColor: "#fff", paddingTop: "110px" }} className='px-3'>
 
-                        <h1 className='text-center py-5'>Appoinment Bookings </h1>
+                        <h1 className='text-center py-5 fw-bold' style={{fontSize: "clamp(1.25rem, 0.25rem + 4vw, 2.5rem)"}}>Appoinment Bookings </h1>
                         <Table responsive striped hover variant="dark">
                             <thead >
                                 <tr >
-                                    <th className='py-3'>#</th>
-                                    <th className='py-3'>Name</th>
-                                    <th className='py-3'>Date of Booking</th>
-                                    <th className='py-3'>Docter Name</th>
-                                    <th className='py-3'>Phone Number</th>
-                                    <th className='py-3'>D.O.B</th>
-                                    <th className='py-3'>Token No</th>
-                                    {/* <th className='py-3'>Token No</th>  */}
-                                        <th className='py-3'> </th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>#</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}} >Name</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Date of Booking</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Docter Name</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Phone Number</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>D.O.B</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Token No</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}> </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
-                                    // allProductss.filter(productitem => productitem.id === proid).map(productitem => (
                                     appoinmentRequestList ?
-                                    // appoinmentRequestList.filter(item=>item)
                                         appoinmentRequestList.map((item, index) => (
                                             <tr key={item._id}>
-                                                <td>{index+1}</td>
-                                                <td>{item.firstname}</td>
-                                                <td>{item.dateofbooked.slice(0,10)}</td>
-                                                <td>{item.docter}</td>
-                                                <td>{item.phone}</td>
-                                                <td>{item.dob.slice(0,10)}</td>
-                                                <td>{item.tokenNo}</td>
-                                                <td className='d-flex justify-content-evenly'><Button  style={{ backgroundColor: "#aa0000", border: "none" }}  onClick={()=>handleDeleteAppoinemntList(item)}><MdDeleteOutline /></Button></td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{index + 1}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.firstname}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.dateofbooked.slice(0, 10)}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.docter}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.phone}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.dob.slice(0, 10)}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.tokenNo}</td>
+                                                <td className='d-flex justify-content-evenly'><Button style={{ backgroundColor: "#aa0000", border: "none" }} onClick={() => handleDeleteAppoinemntList(item)}><MdDeleteOutline /></Button></td>
                                                 {/* <td className='d-flex justify-content-evenly'><Button style={{ backgroundColor: "green", border: "none" }} onClick={()=>handleAcceptUpdateAppoinemnt(item)}><TiTick /></Button><Button style={{ backgroundColor: "red", border: "none" }}  onClick={()=>handleRejectUpdateAppoinment(item)}><FaXmark /></Button><Button  style={{ backgroundColor: "#aa0000", border: "none" }}  onClick={()=>handleDeleteAppoinemntList(item)}><MdDeleteOutline /></Button></td> */}
                                             </tr>
                                         ))
-                                        :""
+                                        : ""
                                 }
 
                             </tbody>
                         </Table>
 
-                        <h1 className='text-center py-5'>Docter Application Request</h1>
+                        <h1 className='text-center py-5 fw-bold' style={{fontSize: "clamp(1.25rem, 0.25rem + 4vw, 2.5rem)"}}>Docter Application Request</h1>
                         <Table responsive striped hover variant="dark" className='mb-5'>
                             <thead >
                                 <tr >
-                                    <th className='py-3'>#</th>
-                                    <th className='py-3'>Docter Name</th>
-                                    <th className='py-3'>Phone Number</th>
-                                    <th className='py-3'>Specialaised</th>
-                                    <th className='py-3'>Experience</th>
-                                    <th className='py-3'>Consulting Fee</th>
-                                    <th className='py-3'>Status </th>
-                                    <th className='py-3'></th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>#</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Docter Name</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Phone Number</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Education</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Specialaised</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Experience</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Consulting Fee</th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>Status </th>
+                                    <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -235,14 +217,16 @@ function AdminNotification() {
                                     docterRequestList ?
                                         docterRequestList.map((item, index) => (
                                             <tr key={item._id}>
-                                                <td>{index + 1}</td>
-                                                <td>{item.firstname} {item.lastname}</td>
-                                                <td>{item.phone}</td>
-                                                <td>{item.department}</td>
-                                                <td>{item.experience}</td>
-                                                <td>{item.fee}</td>
-                                                <td>{item.status}</td>
-                                                <td className='d-flex justify-content-evenly'><Button  style={{ backgroundColor: "green", border: "none" }} onClick={()=>handleAcceptUpdateDocter(item)}><TiTick /></Button><Button style={{ backgroundColor: "red", border: "none" }} onClick={()=>handleRejectUpdateDocter(item)}><FaXmark /></Button><Button  style={{ backgroundColor: "#aa0000", border: "none" }} onClick={()=>handleDeleteDoctersList(item)}><MdDeleteOutline /></Button></td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{index + 1}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.firstname} {item.lastname}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.phone}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.education}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.department.slice(0,-24)}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.experience}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.fee}</td>
+                                                <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.status}</td>
+                                                <td className='d-flex justify-content-evenly'><Button style={{ backgroundColor: "green", border: "none" }} onClick={() => handleAcceptUpdateDocter(item)}><TiTick /></Button><Button style={{ backgroundColor: "red", border: "none" }} onClick={() => handleDeleteDoctersList(item)}><FaXmark /></Button></td>
+                                                {/* <td className='d-flex justify-content-evenly'><Button style={{ backgroundColor: "green", border: "none" }} onClick={() => handleAcceptUpdateDocter(item)}><TiTick /></Button><Button style={{ backgroundColor: "red", border: "none" }} onClick={() => handleRejectUpdateDocter(item)}><FaXmark /></Button><Button style={{ backgroundColor: "#aa0000", border: "none" }} onClick={() => handleDeleteDoctersList(item)}><MdDeleteOutline /></Button></td> */}
                                             </tr>
                                         ))
                                         : ""

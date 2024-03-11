@@ -61,23 +61,23 @@ function AdminBody() {
         const res = await doctersDeleteListApi(item._id, reqHeader)
         console.log(res);
         if (res.status === 200) {
-            message.success("Docter Application Deleted")
+            message.success("Docter Deleted")
             handleDocterList()
 
         }
         else {
-            message.error("Failed")
+            message.error("Deletion Failed")
         }
     }
 
 
     return (
-        <div style={{ height: "", backgroundColor: "#23b3b4", width: "100%" }}>
+        <div style={{ height: "", backgroundColor: "#fff", width: "100%" }}>
             <div style={{ marginTop: "100px" }} className=''>
-                <h1 className='text-center pt-5'>Docters List</h1>
+                <h1 className='text-center pt-5 fw-bold'  style={{fontSize: "clamp(0.9375rem, -0.3125rem + 5vw, 2.5rem)"}}>Docters List</h1>
                 <Row className='d-flex justify-content-start gx-0 '>
                 <Col xs={12} className='d-flex justify-content-center my-3 '>
-                    <input type="text" className='mx-5 w-50 form-control' style={{backgroundColor:"#e0e0e0"}} placeholder='Search Docter or Department' onChange={(e)=>{setSearch(e.target.value)}}/>
+                    <input type="text" className='mx-5 w-50 form-control' style={{backgroundColor:"#d4faef"}} placeholder='Search Docter or Department' onChange={(e)=>{setSearch(e.target.value)}}/>
                 </Col>
                     {
                         docterList ?
@@ -90,14 +90,14 @@ function AdminBody() {
 
                                         </div>
                                         <Card.Img variant="top" src={`${BASE_URL}/upload/${item.dr_image}`} className='img-fluid' style={{ height: "200px"}} />
-                                        <Card.Body style={{backgroundColor:"#e0e0e0"}}>
+                                        <Card.Body style={{backgroundColor:"#000", color:"#fff", borderTop:"2px solid #fff"}}>
                                             <Card.Title className='text-center'>{item.fistname} {item.lastname}</Card.Title>
-                                            <Card.Text className='px-4'>
-                                                <h6><span className='fw-bold'>Department : </span>{item.department}</h6>
-                                                <h6><span className='fw-bold'>Fee : </span>{item.fee}</h6>
+                                            <Card.Text className='ps-3'>
+                                                <h6 style={{ fontSize:"clamp(0.75rem, 0.55rem + 0.8vw, 1rem)"}}><span className='fw-bold' >Department : </span>{item.department.slice(0,-24)}</h6>
+                                                <h6 style={{ fontSize:"clamp(0.75rem, 0.55rem + 0.8vw, 1rem)"}}><span className='fw-bold'>Fee : </span>{item.fee}</h6>
                                             </Card.Text>
                                             <div className='d-flex justify-content-center my-4'>
-                                                <Link to={`/${item.lastname}/appoinmentlist`}><Button variant="primary" className=''>Appoinment List</Button></Link>
+                                                <Link to={`/${item._id}/appoinmentlist`}><Button variant="primary" className=''>Appoinment List</Button></Link>
                                             </div>
                                         </Card.Body>
                                     </Card>

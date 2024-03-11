@@ -7,8 +7,7 @@ import { addReviewApi } from '../Services/allApis';
 const desc = ['terrible 😤 ', 'bad 😕', 'normal 😊', 'good 👍', 'wonderful 🤩'];
 
 function HomeReview() {
-    // const [ratingStar, setRatingStar] = useState(null)
-    // const [hoverStar, setHoverStar] = useState(null)
+
     const [value, setValue] = useState(3);
     const [token,setToken]=useState("")
     const [reviewDetails,setReviewDetails] =useState({
@@ -61,10 +60,10 @@ function HomeReview() {
     console.log(value);
 
     return (
-        <div className='py-5 ' style={{ backgroundColor: "#23b3b4", borderBottom:"2px solid #e0e0e0"}}>
+        <div className='py-5 ' style={{ backgroundColor: "#fff", borderBottom:"2px solid #e0e0e0"}}>
             <div>
                 <h1 className='text-center fw-bold'>Review</h1>
-                <div className='d-flex justify-content-center p-5'>
+                <div className='d-flex justify-content-center py-4'>
                     <Form >
                         <div className='d-flex px-5'>
                             <Flex gap="middle" vertical>
@@ -75,33 +74,12 @@ function HomeReview() {
 
                         <Form.Group className="my-3" controlId="exampleForm.ControlTextarea1" >
                             <Form.Label style={{ fontSize: "20px", fontWeight: "500" }}> Your openion</Form.Label>
-                            <Form.Control as="textarea" rows={5} value={reviewDetails.reviewmessage} style={{backgroundColor:"#e0e0e0"}} onChange={(e)=>setReviewDetails({...reviewDetails,reviewmessage:e.target.value})}/>
+                            <Form.Control as="textarea" rows={5} value={reviewDetails.reviewmessage} style={{backgroundColor:"#d9efe9"}} onChange={(e)=>setReviewDetails({...reviewDetails,reviewmessage:e.target.value})}/>
                         </Form.Group>
                         <Button className='d-flex float-end mb-3' onClick={handleAddReview}>Submit</Button>
                     </Form>
                 </div>
             </div>
-
-            {/* <Row>
-            <Col md={2} className='p-5 d-flex justify-content-center'>
-                    <Card style={{ width: '22rem' }}>
-                        <Card.Img variant="top" src="https://www.shutterstock.com/image-photo/doctor-nurse-treating-patient-severe-260nw-1768533362.jpg" />
-                        <Card.Body>
-                            <Card.Title className='text-center'>Name</Card.Title>
-                            <Card.Text className='px-4'>
-                                <h6><span className='fw-bold'>Department</span> : jdksjk</h6>
-                                <h6><span className='fw-bold'>Time</span> : 9.00 AM to 5.00 PM</h6>
-                            </Card.Text>
-                            <div className='d-flex justify-content-evenly mt-4 mb-3'>
-                                <Button variant="outlined">More About</Button>
-                                <Button variant="contained">For Booking</Button>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                </Col>
-            </Row> */}
-
-
         </div>
     )
 }

@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import AdminHeader from '../Components/AdminHeader'
 import { Col, Row } from 'react-bootstrap'
-import hospitalLogo from '../Assets/hospital_logo.png'
 import AdminBody from '../Components/AdminBody'
 import './admin.css'
 import AdminNavbar from '../Components/AdminNavbar'
@@ -15,7 +14,7 @@ function Admin() {
                 <Col md={2} xs={4} style={{backgroundColor:"black"}}>
                     <AdminHeader />
                 </Col>
-                <Col md={10} xs={8} style={{backgroundColor:"#23b3b4"}}>
+                <Col md={10} xs={8} style={{backgroundColor:"#fff"}}>
                     <AdminBody/>
                 </Col>
             </Row>

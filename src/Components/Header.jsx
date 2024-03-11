@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import hospitalLogo from '../Assets/hospital_logo.png'
 import { Container, Dropdown, Nav, Navbar } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import './Header.css'
 import { getDoctersAcceptedApi } from '../Services/allApis'
 import { message } from 'antd'
-import EditprofileModal from './EditprofileModal'
 import { BASE_URL } from '../Services/baseUrl'
+import { docterEditResContext } from '../Context/ContextShares'
 function Header() {
+  const {docterEditRes,setDocterEditRes}=useContext(docterEditResContext)
+
   const [logout, setLogout] = useState('')
   const [open, setOpen] = useState(false);
   const [preview,setPreview]=useState("")
-  // const [profileDetails,setProfileDetails]=useState({
-  //   username:"", email:"", password:"", phone:"" ,firstname:"" ,lastname:"" ,dob:"" ,gender:"" ,address:"" ,user_image:""
-  // })
+
 
 
   const navigate = useNavigate()
@@ -47,7 +47,7 @@ function Header() {
 
   useEffect(() => {
     handleDocterList()
-  }, [localStorage.getItem("token"),search])
+  }, [localStorage.getItem("token"),search,docterEditRes])
 
   const handleDocterList = async () => {
     const reqHeader = {
@@ -74,7 +74,8 @@ function Header() {
 
   return (
     <>
-      <div style={{ backgroundColor: "#e0e0e0", width: "100%", position: "fixed", zIndex: "1" }} className=''>
+      <div style={{ backgroundColor: "#d9efe9", width: "100%", position: "fixed", zIndex: "1" }} className=''>
+      {/* <div style={{ backgroundColor: "#e0e0e0", width: "100%", position: "fixed", zIndex: "1" }} className=''> */}
         <Navbar expand="lg" className="">
           <Container className=''>
             <Navbar.Brand href="#home">
@@ -82,15 +83,15 @@ function Header() {
                 <img src={hospitalLogo} alt="hospital-logo" width={100} height={100} />
                 <div className='mt-4' style={{ fontFamily: "Bebas Neue, sans-serif", letterSpacing: "2px" }}>
                   <h3 className='d-flex justify-content-center mb-0' style={{ fontFamily: "Bebas Neue, sans-serif", letterSpacing: "4px", color:"black"}}>HOPE WELL</h3>
-                  <p className='d-flex justify-content-center' style={{ fontFamily: "Bebas Neue, sans-serif", letterSpacing: "3px", color:"black"}}>TRUST US , WE ARE WITH YOU</p>
+                  <p className='d-flex justify-content-center' style={{ fontFamily: "Bebas Neue, sans-serif", letterSpacing: "3px", color:"black",fontSize: "clamp(0.875rem, 0.7083rem + 0.6667vw, 1.25rem)"}}>TRUST US , WE ARE WITH YOU</p>
                 </div>
               </div>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav" style={{ flexGrow: "0", marginRight: "30px" }}>
               <Nav className="me-auto">
-                <Nav.Link   className='mx-2 ps-1'><Link to={'/home'} style={{ textDecoration: "none", color: "#000", fontSize: "large", fontWeight: "500" }}>Home</Link></Nav.Link>
-                <Nav.Link   className='mx-2 ps-1'><Link to={"/home#about"} style={{ textDecoration: "none", color: "#000", fontSize: "large", fontWeight: "500" }}>About Us</Link></Nav.Link>
+                <Nav.Link   className='mx-2 ps-1'><Link to={'/home'} style={{ textDecoration: "none", color: "#000", fontSize: "clamp(0.75rem, 0.5833rem + 0.6667vw, 1.125rem)", fontWeight: "500" }}>Home</Link></Nav.Link>
+                <Nav.Link   className='mx-2 ps-1'><Link to={"/home#about"} style={{ textDecoration: "none", color: "#000", fontSize: "clamp(0.75rem, 0.5833rem + 0.6667vw, 1.125rem)", fontWeight: "500" }}>About Us</Link></Nav.Link>
                 {/* <Dropdown>
                 <Dropdown.Toggle variant='' id="dropdown-basic" className='  border-0'>
                   <span style={{ color: "#000", fontSize: "large", fontWeight: "500" }}> Departments</span>
@@ -109,14 +110,14 @@ function Header() {
               </Dropdown> */}
                 <Dropdown>
                   <Dropdown.Toggle variant='' id="dropdown-basic" className='  border-0 pt-2'>
-                    <span style={{ color: "#000", fontSize: "large", fontWeight: "500" }}> Our Docters</span>
+                    <span style={{ color: "#000",fontSize: "clamp(0.75rem, 0.5833rem + 0.6667vw, 1.125rem)", fontWeight: "500" }}> Our Docters</span>
                   </Dropdown.Toggle>
 
-                  <Dropdown.Menu style={{ backgroundColor: "#e0e0e0", border: "none" }}>
+                  <Dropdown.Menu style={{ backgroundColor: "#fff", border: "none" }}>
                     {
                       docterList ?
                         docterList.map(item => (
-                          <Dropdown.Item  key={item._id}  id='dropdown-item'><Link to={`/${item.lastname}/booking`} style={{ color: "#000", fontSize: "large", fontWeight: "500", textDecoration:"none"}}>{item.firstname} {item.lastname}</Link></Dropdown.Item>
+                          <Dropdown.Item  key={item._id}  id='dropdown-item'><Link to={`/${item._id}/booking`} style={{ color: "#000", fontSize: "clamp(0.75rem, 0.5833rem + 0.6667vw, 1.125rem)", fontWeight: "500", textDecoration:"none"}}>{item.firstname} {item.lastname}</Link></Dropdown.Item>
                           // <Dropdown.Item href={`/${item.lastname}/booking`} key={item._id} style={{ color: "#000", fontSize: "large", fontWeight: "500" }} id='dropdown-item'>{item.firstname} {item.lastname}</Dropdown.Item>
 
                         ))
@@ -126,16 +127,16 @@ function Header() {
                 </Dropdown>
                 <Dropdown>
                   <Dropdown.Toggle variant='' id="dropdown-basic" className='  border-0 pt-2'>
-                    <span style={{ color: "#000", fontSize: "large", fontWeight: "500" }}> Appoinments</span>
+                    <span style={{ color: "#000", fontSize: "clamp(0.75rem, 0.5833rem + 0.6667vw, 1.125rem)", fontWeight: "500" }}> Appoinments</span>
                   </Dropdown.Toggle>
 
-                  <Dropdown.Menu style={{ backgroundColor: "#e0e0e0", border: "none" }}>
-                    <Dropdown.Item   id='dropdown-item'><Link to={"/drapplication"} style={{ color: "#000", fontSize: "large", fontWeight: "500", textDecoration:"none"}}>Application For Docter Vacancy</Link></Dropdown.Item>
-                    <Dropdown.Item   id='dropdown-item'><Link to={"/booking"} style={{ color: "#000", fontSize: "large", fontWeight: "500", textDecoration:"none"}}>Book New Appoinment</Link></Dropdown.Item>
-                    <Dropdown.Item  id='dropdown-item'><Link to={"/appoinmentlist"} style={{ color: "#000", fontSize: "large", fontWeight: "500", textDecoration:"none"}}>Your Appoinments</Link></Dropdown.Item>
+                  <Dropdown.Menu style={{ backgroundColor: "#fff", border: "none" }}>
+                    <Dropdown.Item   id='dropdown-item'><Link to={"/drapplication"} style={{ color: "#000", fontSize: "clamp(0.75rem, 0.5833rem + 0.6667vw, 1.125rem)", fontWeight: "500", textDecoration:"none"}}>Application For Docter Vacancy</Link></Dropdown.Item>
+                    <Dropdown.Item   id='dropdown-item'><Link to={"/booking"} style={{ color: "#000", fontSize: "clamp(0.75rem, 0.5833rem + 0.6667vw, 1.125rem)", fontWeight: "500", textDecoration:"none"}}>Book New Appoinment</Link></Dropdown.Item>
+                    <Dropdown.Item  id='dropdown-item'><Link to={"/appoinmentlist"} style={{ color: "#000", fontSize: "clamp(0.75rem, 0.5833rem + 0.6667vw, 1.125rem)", fontWeight: "500", textDecoration:"none"}}>Your Appoinments</Link></Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-                <Nav.Link  className='mx-2 ps-1'><Link style={{ textDecoration: "none", color: "#000", fontSize: "large", fontWeight: "500" }}>24*7 Service</Link></Nav.Link>
+                <Nav.Link  className='mx-2 ps-1'><Link style={{ textDecoration: "none", color: "#000", fontSize: "clamp(0.75rem, 0.5833rem + 0.6667vw, 1.125rem)", fontWeight: "500" }}>24*7 Service</Link></Nav.Link>
                 {/* <Nav.Link href="/usernotification" style={{ textDecoration: "none", color: "#000", fontSize: "large", fontWeight: "500" }} className='mx-2 ps-1'><img src="https://cdn-icons-png.flaticon.com/512/565/565422.png" alt="" width={30} /></Nav.Link> */}
                 <div className='d-flex justify-content-center align-items-center h-100 '>
                   <button className='border-0 py-2 px-4 fw-bold' style={{ color: "#fff", backgroundColor: "red" }} onClick={handleLogout}>Logout <img src="https://cdn-icons-png.flaticon.com/512/56/56805.png" alt="logout-icon" width={25} /></button>
