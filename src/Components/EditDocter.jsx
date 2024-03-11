@@ -88,10 +88,10 @@ function EditDocter({docters}) {
             <button style={{ background: "none", border: "none" }} onClick={handleShow}><CiEdit className='' style={{ fontSize: "28px" }} /></button>
 
             <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
-                <Modal.Header closeButton style={{ backgroundColor: "gray" }}>
-                    <Modal.Title>{docters.lastname}</Modal.Title>
+                <Modal.Header closeButton>
+                    <Modal.Title className='fw-bold'>{docters.lastname}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body style={{ backgroundColor: "gray" }}>
+                <Modal.Body >
                     <form >
                         <div className='row'>
                             <div className='col-lg-5 d-flex align-items-center'>
@@ -102,15 +102,14 @@ function EditDocter({docters}) {
                                 </label>
                             </div>
                             <div className='col-lg-7'>
-                                <input type="text " placeholder='Docter Fee' defaultValue={docters.fee}  onChange={(e)=>setUpdateDocter({...updateDocter,fee:e.target.value})} className='form-control mb-3 rounded' />
-                                <input type="text " placeholder='Department' defaultValue={docters.department}  onChange={(e)=>setUpdateDocter({...updateDocter,department:e.target.value})} className='form-control mb-3 rounded ' />
-                                <input type="text " placeholder='Education' defaultValue={docters.education}  onChange={(e)=>setUpdateDocter({...updateDocter,education:e.target.value})} className='form-control mb-3 rounded ' />
-                                <input type="text " placeholder='Department' defaultValue={docters.phone}  onChange={(e)=>setUpdateDocter({...updateDocter,phone:e.target.value})} className='form-control mb-3 rounded ' />
+                                Fee : <input type="text " placeholder='Docter Fee' defaultValue={docters.fee}  onChange={(e)=>setUpdateDocter({...updateDocter,fee:e.target.value})} className='form-control mb-3 rounded' />
+                                Education : <input type="text " placeholder='Education' defaultValue={docters.education}  onChange={(e)=>setUpdateDocter({...updateDocter,education:e.target.value})} className='form-control mb-3 rounded ' />
+                                Phone : <input type="text " placeholder='Phone Number' defaultValue={docters.phone}  onChange={(e)=>setUpdateDocter({...updateDocter,phone:e.target.value})} className='form-control mb-3 rounded ' />
                             </div>
                         </div>
                     </form>
                 </Modal.Body>
-                <Modal.Footer style={{ backgroundColor: "gray" }}>
+                <Modal.Footer >
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>

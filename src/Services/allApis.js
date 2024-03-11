@@ -17,9 +17,6 @@ export const adminLoginApi =async(data)=>{
     return await commonApi("POST",`${BASE_URL}/admin/login`,data,'')
 }
 
-// export const addDocterRequestApi = async(data,headers)=>{
-//     return await commonApi("POST",`${BASE_URL}/user/adddocter`,data,headers)
-// }
 
 export const addDocterApi = async(data,headers)=>{
     return await commonApi("POST",`${BASE_URL}/admin/adddocter`,data,headers)
@@ -33,17 +30,11 @@ export const getDoctersRequestListApi = async(headers)=>{
     return await commonApi("GET",`${BASE_URL}/admin/getdocterrequest`,'',headers)
 }
 
-// export const getDoctersAcceptedApi = async(headers)=>{
-//     return await commonApi("GET",`${BASE_URL}/admin/getdocteraccepted`,'',headers)
-// }
 
 export const getDoctersAcceptedApi = async(headers,search)=>{
     return await commonApi("GET",`${BASE_URL}/admin/getdocteraccepted?search=${search}`,'',headers)
 }
 
-// export const getDocterRequestListApi = async(headers)=>{
-//     return await commonApi("GET",`${BASE_URL}/admin/getdocterrequest`,'',headers)
-// }
 
 export const getAdminsListApi = async(headers)=>{
     return await commonApi("GET",`${BASE_URL}/admin/getadminslist`,'',headers)
@@ -53,9 +44,6 @@ export const getUsersListApi = async(headers)=>{
     return await commonApi("GET",`${BASE_URL}/admin/getuserslist`,'',headers)
 }
 
-// export const getAppoinmentRequestistApi = async(headers)=>{
-//     return await commonApi("GET",`${BASE_URL}/admin/getappoinmentrequest`,'',headers)
-// }
 
 export const getAppoinmentsListApi = async(headers)=>{
     return await commonApi("GET",`${BASE_URL}/admin/getappoinments`,'',headers)
@@ -73,10 +61,6 @@ export const addReviewApi = async(data,headers)=>{
 
 export const getReviewListApi = async(headers)=>{
     return await commonApi("GET",`${BASE_URL}/admin/getreviews`,"",headers)
-}
-
-export const appoinemntRejectAcceptUpdateApi =async (data,headers,id)=>{
-    return await commonApi("PUT",`${BASE_URL}/admin/updateappoinment/${id}`,data,headers)
 }
 
 export const appoinmentDeleteListApi=async(id,headers)=>{
@@ -106,3 +90,20 @@ export const deleteUserListApi=async(id,headers)=>{
 export const deleteReviewListApi=async(id,headers)=>{
     return await commonApi("DELETE",`${BASE_URL}/admin/deletereview/${id}`,{},headers)
 }
+
+
+// -------------------------------------------------------------------------------------------
+
+export const viewDepartmentListApi=async(headers)=>{
+    return await commonApi("GET",`${BASE_URL}/admin/getcata`,"",headers)
+}
+export const addDepartmentApi=async(data,headers)=>{
+    return await commonApi("POST",`${BASE_URL}/admin/addcata`,data,headers)
+}
+export const pushDepartmentApi=async(id,data,headers)=>{
+    return await commonApi("POST",`${BASE_URL}/admin/pushcata/${id}`,data,headers)
+}
+export const deleteDepartmentApi=async(id,headers)=>{
+    return await commonApi("DELETE",`${BASE_URL}/admin/deletedept/${id}`,{},headers)
+}
+// -------------------------------------------------------------------------------------------

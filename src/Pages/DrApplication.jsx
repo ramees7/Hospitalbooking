@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../Components/Header'
-import { Button, Col, FloatingLabel, Form, Row } from 'react-bootstrap'
+import { Button, Col,  Form, Row } from 'react-bootstrap'
 import { IoMdDownload } from "react-icons/io";
-import { toast } from 'react-toastify'
 import { Link, useNavigate } from 'react-router-dom';
 import { message } from 'antd';
-import { addDocterApi } from '../Services/allApis';
+import { addDocterApi, viewDepartmentListApi } from '../Services/allApis';
 import profileImg from '../Assets/profile.webp'
 
 
@@ -20,6 +19,8 @@ function DrApplication() {
         firstname: "", lastname: "", email: "", phone: "", dob: "", address: "", department: "", education: "", experience: "", fee: "₹ ", dr_image: "", userId: "", status: ""
     })
     const [selectedDob, setSelectedDob] = useState('');
+    const [deptName,setDeptName]=useState("")
+
 
     useEffect(() => {
         const existingUser = JSON.parse(localStorage.getItem("currentUser"))
@@ -28,6 +29,7 @@ function DrApplication() {
             setDocterDetails({ ...docterDetails, userId: existingUser._id, status: "Requested" })
             setToken(localStorage.getItem("token"))
             console.log(token);
+            handleDeptNameList()
         }
         else {
             navigate('/')
@@ -94,6 +96,7 @@ function DrApplication() {
                 setIfSubmit(true)
                 sessionStorage.setItem("docterToPdf", JSON.stringify(res.data))
                 handleClear()
+                navigate("/docterpdf")
             }
             else {
                 message.error("error")
@@ -108,9 +111,24 @@ function DrApplication() {
             selectedDate: ""
         })
         setPreviewImg(profileImg)
-        // setPreviewImg("https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_640.png")
         
     }
+
+
+        // ----------------------------------------dept---------------------------------------------------------------------
+        const handleDeptNameList=async()=>{
+            const reqHeader = {
+                "Content-Type": "application/json", "Authorization": `bearer ${localStorage.getItem("token")}`
+            }
+            console.log(reqHeader)
+            const res = await viewDepartmentListApi(reqHeader)
+            if (res.status === 200) {
+                setDeptName(res.data)
+            }
+    }
+    console.log(deptName);
+
+    // ----------------------------------------dept---------------------------------------------------------------------
 
     console.log(docterDetails);
     console.log(previewImg);
@@ -120,11 +138,11 @@ function DrApplication() {
     return (
         <div>
             <Header />
-            <div style={{ height: "", backgroundColor: "#23b3b4", paddingTop: "110px", position: "" }} className=''>
-                <div className='p-5 ' >
+            <div style={{ height: "", backgroundColor: "#fff", paddingTop: "110px", position: "" }} className=''>
+                <div className='py-5 px-3  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}} ' >
                     <Row className='gx-0 rounded py-5' style={{ backgroundColor: "black" }}>
                         <Col sm={12} className=' mb-3'>
-                            <h1 className='text-center fw-bold' style={{color:"#e0e0e0"}}>Application for Docter Vacancy</h1>
+                            <h1 className='text-center fw-bold' style={{color:"#fff", fontSize: "clamp(1.25rem, 0.6944rem + 2.2222vw, 2.5rem)"}}>Application for Docter Vacancy</h1>
                         </Col>
                         <Col md={12} className='d-flex justify-content-center p-4'>
                             <label htmlFor="profile" className='text-center'>
@@ -134,55 +152,65 @@ function DrApplication() {
                         </Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4 '>
-                            <h5 className='text-light'>First Name : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.firstname} onChange={(e) => setDocterDetails({ ...docterDetails, firstname: e.target.value })} />
+                            <h5 className='text-light'  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}>First Name : </h5>
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.firstname} onChange={(e) => setDocterDetails({ ...docterDetails, firstname: e.target.value })} />
                         </Col>
                         <Col md={5} className='p-4'>
-                            <h5 className='text-light'>Last Name : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.lastname} onChange={(e) => setDocterDetails({ ...docterDetails, lastname: e.target.value })} />
-                        </Col>
-                        <Col md={1}></Col>
-                        <Col md={1}></Col>
-                        <Col md={5} className='p-4'>
-                            <h5 className='text-light'>Phone Number : </h5>
-                            <Form.Control type="number" placeholder="" style={{ height: "50px", backgroundColor:"#e0e0e0" }} value={docterDetails.phone} onChange={(e) => setDocterDetails({ ...docterDetails, phone: e.target.value })} />
-                        </Col>
-                        <Col md={5} className='p-4'>
-                            <h5 className='text-light'>Email : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.email} onChange={(e) => setDocterDetails({ ...docterDetails, email: e.target.value })} />
+                            <h5 className='text-light'  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}>Last Name : </h5>
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.lastname} onChange={(e) => setDocterDetails({ ...docterDetails, lastname: e.target.value })} />
                         </Col>
                         <Col md={1}></Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4'>
-                            <h5 className='text-light'>Date Of Birth : </h5>
-                            <input type="date" className='rounded ps-3' style={{ width: "100%", height: "50px" , backgroundColor:"#e0e0e0"}} value={selectedDob} onChange={(e) => setSelectedDob(e.target.value)} />
+                            <h5 className='text-light'  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}>Phone Number : </h5>
+                            <Form.Control type="number" placeholder="" style={{ height: "50px" }} value={docterDetails.phone} onChange={(e) => setDocterDetails({ ...docterDetails, phone: e.target.value })} />
+                        </Col>
+                        <Col md={5} className='p-4'>
+                            <h5 className='text-light'  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}>Email : </h5>
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.email} onChange={(e) => setDocterDetails({ ...docterDetails, email: e.target.value })} />
+                        </Col>
+                        <Col md={1}></Col>
+                        <Col md={1}></Col>
+                        <Col md={5} className='p-4'>
+                            <h5 className='text-light'  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}>Date Of Birth : </h5>
+                            <input type="date" className='rounded ps-3' style={{ width: "100%", height: "50px"}} value={selectedDob} onChange={(e) => setSelectedDob(e.target.value)} />
                             <h6 id='dobid' className='text-danger'></h6>
                             {/* <input type="date" className='rounded ps-3'  style={{ width: "100%", height: "50px" }} value={docterDetails.dob} onChange={(e) => setDocterDetails({ ...docterDetails, dob: e.target.value })} /> */}
                         </Col>
                         <Col md={5} className='p-4'>
-                            <h5 className='text-light'>Your Address : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px", backgroundColor:"#e0e0e0" }} value={docterDetails.address} onChange={(e) => setDocterDetails({ ...docterDetails, address: e.target.value })} />
+                            <h5 className='text-light'  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}>Your Address : </h5>
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.address} onChange={(e) => setDocterDetails({ ...docterDetails, address: e.target.value })} />
                         </Col>
                         <Col md={1}></Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4'>
-                            <h5 className='text-light'>Education : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.education} onChange={(e) => setDocterDetails({ ...docterDetails, education: e.target.value })} />
+                            <h5 className='text-light'  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}>Education : </h5>
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.education} onChange={(e) => setDocterDetails({ ...docterDetails, education: e.target.value })} />
                         </Col>
                         <Col md={5} className='p-4'>
-                            <h5 className='text-light'>Specialised to : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.department} onChange={(e) => setDocterDetails({ ...docterDetails, department: e.target.value })} />
+                            <h5 className='text-light  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}'>Specialised to : </h5>
+                            <Form.Select aria-label="" name='docter' style={{ height: "50px" }} onChange={(e)=>setDocterDetails({...docterDetails,department:e.target.value})}>
+                                        <option value={""} >Select Your Department</option>
+                                        {
+                                            deptName?
+                                            deptName.map(item=>(
+                                                <option  style={{}} value={item.dept_name + item._id}>{item.dept_name}</option>
+                                            )):""
+                                        }
+                                            
+                                    </Form.Select>
+                            {/* <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.department} onChange={(e) => setDocterDetails({ ...docterDetails, department: e.target.value })} /> */}
                         </Col>
 
                         <Col md={1}></Col>
                         <Col md={1}></Col>
                         <Col md={5} className='p-4'>
-                            <h5 className='text-light'>Work Experience : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.experience} onChange={(e) => setDocterDetails({ ...docterDetails, experience: e.target.value })} />
+                            <h5 className='text-light'  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}>Work Experience : </h5>
+                            <Form.Control type="text" placeholder="" style={{ height: "50px"}} value={docterDetails.experience} onChange={(e) => setDocterDetails({ ...docterDetails, experience: e.target.value })} />
                         </Col>
                         <Col md={5} className='p-4'>
-                            <h5 className='text-light'>Consultation fee : </h5>
-                            <Form.Control type="text" placeholder="" style={{ height: "50px" , backgroundColor:"#e0e0e0"}} value={docterDetails.fee} onChange={(e) => setDocterDetails({ ...docterDetails, fee: e.target.value })} />
+                            <h5 className='text-light'  style={{fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}>Consultation fee : </h5>
+                            <Form.Control type="text" placeholder="" style={{ height: "50px" }} value={docterDetails.fee} onChange={(e) => setDocterDetails({ ...docterDetails, fee: e.target.value })} />
                         </Col>
 
 

@@ -1,16 +1,10 @@
-import { TextField } from '@mui/material'
 import { message } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Button } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
 import { userLoginApi, userRegisterApi } from '../Services/allApis'
-import { adminLoginApi } from '../Services/allApis'
 import './AuthMQ.css'
 import hospitalLogo from '../Assets/hospital_logo.png'
-
 import { IoIosArrowBack } from "react-icons/io";
-
 import iphoneBattery from '../Assets/iphone_battery.png'
 import fbLogo from '../Assets/Facebook_icon.png'
 import googleIcon from '../Assets/google_icon.webp'
@@ -20,12 +14,19 @@ import Xlogo from '../Assets/x_icon.jpg'
 
 function Auth({ login, admin }) {
 
-    const timeNow = Date().slice(16, 21)
-    console.log(timeNow)
+    // const timeNow = Date().slice(16, 21)
+    // console.log(timeNow)
     const [userData, setUserData] = useState({
         username: "", email: "", password: "", phone: ""
     })
 
+    const [time, setTime] = useState("")
+    useEffect(() => {
+        setInterval(() => {
+            setTime(Date().slice(16, 21))
+
+        }, 1000)
+    }, [])
     const navigate = useNavigate()
 
     const handleUserRegistration = async (e) => {
@@ -86,10 +87,10 @@ function Auth({ login, admin }) {
     return (
         <div>
             <div className='d-flex justify-content-center align-items-center' style={{ width: "100%", height: "700px" }}>
-                <div style={{ width: "310px", height: "80%", backgroundColor: "#e0e0e0", borderRadius: "50px", border: "10px solid black" }} className='d-flex justify-content-center p-3'>
+                <div style={{ width: "310px", height: "80%", backgroundColor: "#fff", borderRadius: "50px", border: "10px solid black" }} className='d-flex justify-content-center p-3'>
                     <div>
                         <div style={{ width: "30%", height: "28px", backgroundColor: "black", borderRadius: "40px " }} className='mx-auto'>
-                            <span style={{ position: "relative", right: "75px", fontWeight: "700", top: "3px" }}>{timeNow}</span>
+                            <span style={{ position: "relative", right: "75px", fontWeight: "700", top: "3px" }}>{time}</span>
                             <span style={{ position: "relative", left: "88px", bottom: "32px" }}> <img src={iphoneBattery} alt="" width={80} /> </span>
                         </div>
                         <div className='d-flex justify-content-center align-items-center '>
@@ -127,15 +128,15 @@ function Auth({ login, admin }) {
                             {
                                 registerForm ?
                                     <>
-                                        <input type="text" placeholder='Enter Your Name' style={{ width: "100%" , fontSize:"12px", height:"28px", border:"none", outline:"none"}} className='mb-2 px-2 shadow'  onChange={(e) => { setUserData({ ...userData, username: e.target.value }) }} />
-                                        <input type="number" placeholder='Phone Number' style={{ width: "100%", fontSize:"12px", height:"28px", border:"none", outline:"none"}} className='mb-2 px-2 shadow'  onChange={(e) => { setUserData({ ...userData, phone: e.target.value }) }}  />
-                                        <input type="email" placeholder='Email Address' style={{ width: "100%", fontSize:"12px", height:"28px", border:"none", outline:"none"}} className='mb-2 px-2 shadow'  onChange={(e) => { setUserData({ ...userData, email: e.target.value }) }}  />
-                                        <input type="password" placeholder='Password' style={{ width: "100%" , fontSize:"12px", height:"28px", border:"none", outline:"none"}} className='mb-2 px-2 shadow'  onChange={(e) => { setUserData({ ...userData, password: e.target.value }) }} />
+                                        <input type="text" placeholder='Enter Your Name' style={{ width: "100%", fontSize: "12px", height: "28px", border: "none", outline: "none" }} className='mb-2 px-2 shadow' value={userData.username} onChange={(e) => { setUserData({ ...userData, username: e.target.value }) }} />
+                                        <input type="number" placeholder='Phone Number' style={{ width: "100%", fontSize: "12px", height: "28px", border: "none", outline: "none" }} className='mb-2 px-2 shadow' value={userData.phone} onChange={(e) => { setUserData({ ...userData, phone: e.target.value }) }} />
+                                        <input type="email" placeholder='Email Address' style={{ width: "100%", fontSize: "12px", height: "28px", border: "none", outline: "none" }} className='mb-2 px-2 shadow' value={userData.email} onChange={(e) => { setUserData({ ...userData, email: e.target.value }) }} />
+                                        <input type="password" placeholder='Password' style={{ width: "100%", fontSize: "12px", height: "28px", border: "none", outline: "none" }} className='mb-2 px-2 shadow' value={userData.password} onChange={(e) => { setUserData({ ...userData, password: e.target.value }) }} />
                                     </>
                                     :
                                     <>
-                                        <input type="email" placeholder='Enter Your Email' style={{ width: "100%" , fontSize:"12px", height:"35px", border:"none", outline:"none"}} className='mb-2 px-2 shadow' value={userData.email}   onChange={(e) => { setUserData({ ...userData, email: e.target.value }) }} />
-                                        <input type="password" placeholder='Password' style={{ width: "100%", fontSize:"12px", height:"35px", border:"none", outline:"none"}} className='mb-2 px-2 shadow' value={userData.password}   onChange={(e) => { setUserData({ ...userData, password: e.target.value }) }} />
+                                        <input type="email" placeholder='Enter Your Email' style={{ width: "100%", fontSize: "12px", height: "35px", border: "none", outline: "none" }} className='mb-2 px-2 shadow' value={userData.email} onChange={(e) => { setUserData({ ...userData, email: e.target.value }) }} />
+                                        <input type="password" placeholder='Password' style={{ width: "100%", fontSize: "12px", height: "35px", border: "none", outline: "none" }} className='mb-2 px-2 shadow' value={userData.password} onChange={(e) => { setUserData({ ...userData, password: e.target.value }) }} />
                                         <p className='text-end' style={{ fontSize: "12px" }}>Forget Password ?</p>
                                     </>
                             }
@@ -160,7 +161,7 @@ function Auth({ login, admin }) {
                                             <img src={googleIcon} alt="" width={20} className='mx-3' />
                                             <img src={Xlogo} alt="" width={20} className='mx-3' />
                                         </div>
-                                        <Link to={'/register'} style={{textDecoration:"none", color:"#000"}}><p style={{fontSize:"13px", position:"relative",top:"58px"}} className='text-center  mb-0'>Don't have an account ? <span style={{fontWeight:"800"}}>SIGNUP_!</span></p></Link>
+                                        <Link to={'/register'} style={{ textDecoration: "none", color: "#000" }}><p style={{ fontSize: "13px", position: "relative", top: "58px" }} className='text-center  mb-0'>Don't have an account ? <span style={{ fontWeight: "800" }}>SIGNUP_!</span></p></Link>
 
                                     </>
 
@@ -219,7 +220,6 @@ function Auth({ login, admin }) {
                 </div>
             </div> */}
         </div>
-        // {/* // </div> */}
     )
 }
 
