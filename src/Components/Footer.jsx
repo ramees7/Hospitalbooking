@@ -100,7 +100,7 @@ function Footer() {
           </Col>
           <div style={{ backgroundColor: "#172464f2", color: "#fff" }} className='d-flex w-100'>
             {/* <div style={{ backgroundColor: "#23b3b4", color: "black" }} className='d-flex w-100'> */}
-            <h6 className='mb-0 text-center py-3 ' style={{ width: "85%", fontSize: 'clamp(0.75rem, 0.55rem + 0.8vw, 1rem)' }}>Copyright © DMS Hospital LLP. All Rights Reserved.</h6>
+            <h6 className='mb-0 text-center py-3 ' style={{ width: "85%", fontSize: 'clamp(0.75rem, 0.55rem + 0.8vw, 1rem)' }}>Copyright © Hope Well Hospital LLP. All Rights Reserved.</h6>
             <div className='d-grid flex-column justify-content-end p-2' style={{ width: "15%" }}>
               <h6 className='mb-0 ' style={{ fontSize: "clamp(0.6875rem, 0.4375rem + 1vw, 0.9rem)" }}>{time}</h6>
               <h6 className='mb-0' style={{ fontSize: "clamp(0.5625rem, 0.2125rem + 1.4vw, 0.9rem)" }}>{datenow}</h6>
