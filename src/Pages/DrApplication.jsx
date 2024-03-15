@@ -16,7 +16,7 @@ function DrApplication() {
     const [previewImg, setPreviewImg] = useState("")
     const navigate = useNavigate()
     const [docterDetails, setDocterDetails] = useState({
-        firstname: "", lastname: "", email: "", phone: "", dob: "", address: "", department: "", education: "", experience: "", fee: "₹ ", dr_image: "", userId: "", status: ""
+        firstname: "", lastname: "", email: "", phone: "", dob: "", address: "", department: "", education: "", experience: "", fee: "₹ ", dr_image: "", userId: "", status: "" ,messages:""
     })
     const [selectedDob, setSelectedDob] = useState('');
     const [deptName,setDeptName]=useState("")
@@ -26,7 +26,7 @@ function DrApplication() {
         const existingUser = JSON.parse(localStorage.getItem("currentUser"))
         // console.log(existingUserId);
         if (existingUser) {
-            setDocterDetails({ ...docterDetails, userId: existingUser._id, status: "Requested" })
+            setDocterDetails({ ...docterDetails, userId: existingUser._id, status: "Requested" ,messages:"Not Approved Yet"})
             setToken(localStorage.getItem("token"))
             console.log(token);
             handleDeptNameList()
@@ -45,7 +45,7 @@ function DrApplication() {
 
    
     const handleAddDocter = async () => {
-        const { firstname, lastname, email, phone, dob, address, department, education, experience, fee, dr_image, userId, status } = docterDetails
+        const { firstname, lastname, email, phone, dob, address, department, education, experience, fee, dr_image, userId, status ,messages} = docterDetails
         // const today = new Date(); // Current date
         const dobObject = new Date(selectedDob);
         const twentyFiveYearsAgo = new Date();
@@ -67,7 +67,7 @@ function DrApplication() {
             document.getElementById("dobid").innerHTML = "Age Must be on 25 Years to 50 Years old"
 
         }
-        if (!firstname || !lastname || !email || !phone || !dob || !address || !department || !education || !experience || !fee || !dr_image || !userId || !status) {
+        if (!firstname || !lastname || !email || !phone || !dob || !address || !department || !education || !experience || !fee || !dr_image || !userId || !status || !messages) {
             message.warning("Enter Valid Details")
         }
         else {
@@ -85,6 +85,7 @@ function DrApplication() {
             docterData.append("dr_image", dr_image)
             docterData.append("userId", userId)
             docterData.append("status", status)
+            docterData.append("messages", messages)
             console.log(docterData)
             const reqHeader = {
                 "Content-Type": "multipart/form-data", "Authorization": `bearer ${token}`

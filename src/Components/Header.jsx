@@ -18,28 +18,35 @@ function Header() {
 
   const navigate = useNavigate()
   const [userName, setUserName] = useState("")
+  const existingUser = JSON.parse(localStorage.getItem("currentUser"))
+
   useEffect(() => {
-    const existingUser = JSON.parse(localStorage.getItem("currentUser"))
-    if (localStorage.getItem("role") === "user") {
+    if (localStorage.getItem("role") === "user" ) {
       setUserName(existingUser.username)
-      setPreview(`${BASE_URL}/upload/${JSON.parse(localStorage.getItem("currentUser")).user_image}`)
+      setPreview(`${BASE_URL}/upload/${existingUser.user_image}`)
     }
     else {
       message.error("Login First")
       navigate('/')
     }
-  }, [])
+  }, [existingUser])
 
 
   useEffect(()=>{
-    if(JSON.parse(localStorage.getItem('currentUser')).user_image){
-      setPreview(`${BASE_URL}/upload/${JSON.parse(localStorage.getItem('currentUser')).user_image}`)
-
-  }
-  else{
-      setPreview("")
-  }
-  },[])
+    if(existingUser){
+      if(existingUser.user_image){
+        setPreview(`${BASE_URL}/upload/${existingUser.user_image}`)
+  
+    }
+    else{
+        setPreview("")
+    }
+    }else{
+      navigate('/')
+      message.error("Login First")
+    }
+    
+  },[existingUser])
 
   const [docterList, setDocterList] = useState("")
   const [search,setSearch]=useState("")
@@ -137,7 +144,7 @@ function Header() {
                   </Dropdown.Menu>
                 </Dropdown>
                 <Nav.Link  className='mx-2 ps-1'><Link style={{ textDecoration: "none", color: "#000", fontSize: "clamp(0.75rem, 0.5833rem + 0.6667vw, 1.125rem)", fontWeight: "500" }}>24*7 Service</Link></Nav.Link>
-                {/* <Nav.Link href="/usernotification" style={{ textDecoration: "none", color: "#000", fontSize: "large", fontWeight: "500" }} className='mx-2 ps-1'><img src="https://cdn-icons-png.flaticon.com/512/565/565422.png" alt="" width={30} /></Nav.Link> */}
+                <Nav.Link  style={{ textDecoration: "none", color: "#000", fontSize: "large", fontWeight: "500" }} className='mx-2 ps-1'><Link to={"/usernotification"}><img src="https://cdn-icons-png.flaticon.com/512/565/565422.png" alt="" width={30} /></Link></Nav.Link>
                 <div className='d-flex justify-content-center align-items-center h-100 '>
                   <button className='border-0 py-2 px-4 fw-bold' style={{ color: "#fff", backgroundColor: "red" }} onClick={handleLogout}>Logout <img src="https://cdn-icons-png.flaticon.com/512/56/56805.png" alt="logout-icon" width={25} /></button>
                 </div>

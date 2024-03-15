@@ -53,7 +53,7 @@ function AdminReview() {
                     <div style={{ backgroundColor: "#fff", paddingTop: "110px" }} className='px-5 pb-5'>
                     {/* <div style={{ backgroundColor: "#fff", paddingBottom: "300px", paddingTop: "110px" }} className='px-5'> */}
                         <h1 className='text-center py-5 fw-bold' style={{fontSize: "clamp(0.9375rem, -0.3125rem + 5vw, 2.5rem)"}}>Users Review</h1>
-                        <Table responsive striped hover variant="dark">
+                        <Table responsive striped bordered hover variant="dark">
                             <thead >
                                 <tr >
                                     <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>#</th>

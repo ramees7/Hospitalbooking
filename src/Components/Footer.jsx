@@ -105,7 +105,6 @@ function Footer() {
               <h6 className='mb-0 ' style={{ fontSize: "clamp(0.6875rem, 0.4375rem + 1vw, 0.9rem)" }}>{time}</h6>
               <h6 className='mb-0' style={{ fontSize: "clamp(0.5625rem, 0.2125rem + 1.4vw, 0.9rem)" }}>{datenow}</h6>
             </div>
-
           </div>
         </Row>
       </div>
