@@ -5,16 +5,15 @@ import AdminNavbar from './AdminNavbar'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { addDocterApi, pushDepartmentApi, viewDepartmentListApi } from '../Services/allApis'
-import { docterEditResContext } from '../Context/ContextShares'
-
+import { docterAddContext } from '../Context/ContextShares'
 
 function AdminDrAdd() {
-    const {drAdd,setDrAdd}=useContext(docterEditResContext)
+    const {docterAddRes, setDocterAddRes}=useContext(docterAddContext)
     const [token, setToken] = useState("")
     const [previewImg, setPreviewImg] = useState("")
     const navigate = useNavigate()
     const [docterDetails, setDocterDetails] = useState({
-        firstname: "", lastname: "", email: "", phone: "", dob: "", address: "", department: "",education:"", experience: "", fee: "₹ ", dr_image: "", userId: "" ,status:""
+        firstname: "", lastname: "", email: "", phone: "", dob: "", address: "", department: "",education:"", experience: "", fee: "₹ ", dr_image: "", userId: "" ,status:"" ,messages:""
     })
     const [selectedDob, setSelectedDob] = useState('');
     const [deptName,setDeptName]=useState("")
@@ -24,7 +23,7 @@ function AdminDrAdd() {
         const existingUser = JSON.parse(localStorage.getItem("currentUser"))
         // console.log(existingUserId);
         if (existingUser) {
-            setDocterDetails({ ...docterDetails, userId: existingUser._id ,status:"Accepted"})
+            setDocterDetails({ ...docterDetails, userId: existingUser._id ,status:"Accepted" ,messages:"Admin Added Docter"})
             setToken(localStorage.getItem("token"))
             console.log(token);
             handleDeptNameList()
@@ -75,7 +74,7 @@ function AdminDrAdd() {
     // ----------------------------------------dept---------------------------------------------------------------------
 
     const handleAddDocter = async () => {
-        const { firstname, lastname, email, phone, dob, address, department,education, experience, fee, dr_image, userId ,status} = docterDetails
+        const { firstname, lastname, email, phone, dob, address, department,education, experience, fee, dr_image, userId ,status,messages} = docterDetails
         const dobObject = new Date(selectedDob);
         const twentyFiveYearsAgo = new Date();
         twentyFiveYearsAgo.setFullYear(twentyFiveYearsAgo.getFullYear() - 25)
@@ -96,7 +95,7 @@ function AdminDrAdd() {
             document.getElementById("dobid").innerHTML = "Age Must be on 25 Years to 50 Years old"
 
         }
-        if (!firstname || !lastname || !email || !phone || !dob || !address || !department || !education || !experience || !fee  || !dr_image || !userId || !status) {
+        if (!firstname || !lastname || !email || !phone || !dob || !address || !department || !education || !experience || !fee  || !dr_image || !userId || !status || !messages) {
             message.warning("Enter Valid Details")
         }
         else {
@@ -114,6 +113,7 @@ function AdminDrAdd() {
             docterData.append("dr_image", dr_image)
             docterData.append("userId", userId)
             docterData.append("status", status)
+            docterData.append("messages", messages)
             console.log(docterData,"docterdata")
             const reqHeader = {
                 "Content-Type": "multipart/form-data", "Authorization":`bearer ${token}`
@@ -126,7 +126,7 @@ function AdminDrAdd() {
                 handlePushDeptData(docterData)
                 handleClear()
                 navigate('/adminpage')
-                setDrAdd(result.data)
+                setDocterAddRes(result.data)
             }
             else {
                 message.error("Something Went Wrong!!")

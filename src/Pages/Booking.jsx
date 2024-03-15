@@ -5,10 +5,9 @@ import { IoMdDownload } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import {  addAppoinemntsApi, getDoctersAcceptedApi } from '../Services/allApis';
-import { docterEditResContext } from '../Context/ContextShares';
+import { docterAddContext } from '../Context/ContextShares';
 
 function Booking({ drItem }) {
-    const {drAdd,setDrAdd}=useContext(docterEditResContext)
     const docterSpecifedBooking = drItem ? true : false
     const [ifSumbit, setIfSubmit] = useState(false)
     const [token, setToken] = useState(false)
@@ -18,6 +17,7 @@ function Booking({ drItem }) {
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedDob, setSelectedDob] = useState('');
     const [show, setShow] = useState(false);
+    const {docterAddRes, setDocterAddRes}=useContext(docterAddContext)
 
 
     // const [appoinmentPdf,setAppoinmentPdf]=useState("")
@@ -38,7 +38,7 @@ function Booking({ drItem }) {
             handleDocterList()
             setUserIdStatus({ ...appoinmentDetails, userId: existingUser._id })
         }
-    }, [token,drAdd])
+    }, [token,docterAddRes])
 
     const handleDocterList = async () => {
         const reqHeader = {

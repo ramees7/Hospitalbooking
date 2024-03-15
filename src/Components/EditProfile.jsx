@@ -5,7 +5,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../Services/baseUrl';
 import { message } from 'antd';
-import { userUpdateApi } from '../Services/allApis';
+import { deleteUserListApi, userUpdateApi } from '../Services/allApis';
 
 function EditProfile() {
     const [preview, setPreview] = useState('')
@@ -13,7 +13,7 @@ function EditProfile() {
     const [profile, setProfile] = useState({
         username: JSON.parse(localStorage.getItem("currentUser")).username, email: JSON.parse(localStorage.getItem("currentUser")).email, password: JSON.parse(localStorage.getItem("currentUser")).password,
         phone: JSON.parse(localStorage.getItem("currentUser")).phone, firstname: JSON.parse(localStorage.getItem("currentUser")).firstname, lastname: JSON.parse(localStorage.getItem("currentUser")).lastname,
-        gender: JSON.parse(localStorage.getItem("currentUser")).gender, address: JSON.parse(localStorage.getItem("currentUser")).address, user_image: JSON.parse(localStorage.getItem("currentUser")).user_image
+        gender: JSON.parse(localStorage.getItem("currentUser")).gender, address: JSON.parse(localStorage.getItem("currentUser")).address, user_image: JSON.parse(localStorage.getItem("currentUser")).user_image,_id: JSON.parse(localStorage.getItem("currentUser"))._id
     })
 
     useEffect(() => {
@@ -30,6 +30,23 @@ function EditProfile() {
         }
     }, [profile.user_image])
     console.log(preview);
+
+    const handleDeleteUserList =async(id)=>{
+        const reqHeader={
+            "Content-Type": "application/json","Authorization": `bearer ${localStorage.getItem("token")}`
+        }
+        console.log(reqHeader,"dfsdfsdgsg");
+        console.log(id);
+        const res = await deleteUserListApi(id,reqHeader)
+        console.log(res);
+        if(res.status===200){
+            message.success("Account Deleted")
+            navigate('/')
+        }
+        else{
+            message.error("Failed")
+        }
+    }
 
     const handleProfileUpdate = async () => {
         const { username, email, password, phone, firstname, lastname, gender, address, user_image } = profile
@@ -122,6 +139,8 @@ function EditProfile() {
                         <h6 style={{ color: "white" , fontSize: "clamp(0.8125rem, 0.4625rem + 1.4vw, 1.25rem)"}}>Address :</h6>
                         <input type="text" className='rounded px-3 border-0 mb-2' style={{ height: "40px" , backgroundColor:"#e0e0e0"}} onChange={(e) => setProfile({ ...profile, address: e.target.value })} defaultValue={profile.address} />
                         <div className='d-flex justify-content-center mt-3'>
+                        <Button  style={{ backgroundColor: "#aa0000", border: "none" }}  onClick={()=>handleDeleteUserList(profile._id)}>Delete Profile</Button>
+
                             <Button className='border-0 ms-2' onClick={handleProfileUpdate}>Update</Button>
                         </div>
                     </div>

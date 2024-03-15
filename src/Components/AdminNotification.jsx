@@ -7,17 +7,17 @@ import AdminNavbar from './AdminNavbar';
 import {  appoinmentDeleteListApi, doctersDeleteListApi, doctersRejectAcceptUpdateApi, getAppoinmentsListApi, getDoctersRequestListApi, pushDepartmentApi } from '../Services/allApis';
 import { message } from 'antd';
 import { MdDeleteOutline } from "react-icons/md";
-import { docterEditResContext } from '../Context/ContextShares';
+import { docterAddContext } from '../Context/ContextShares';
 
 
 function AdminNotification() {
-    const {docterEditRes,setDocterEditRes}=useContext(docterEditResContext)
 
     const [docterRequestList, setDocterRequestList] = useState("")
     const [appoinmentRequestList, setAppoinmentRequestList] = useState("")
+    const {docterAddRes, setDocterAddRes}=useContext(docterAddContext)
 
     const [updateDocter, setUpdateDocter] = useState({
-        firstname: "", lastname: "", email: "", phone: "", dob: "", address: "", department: "",education:"", experience: "", fee: "", time: "", dr_image: "", userId: "", status: ""
+        firstname: "", lastname: "", email: "", phone: "", dob: "", address: "", department: "",education:"", experience: "", fee: "", time: "", dr_image: "", userId: "", status: "" ,messages:""
     })
 
 
@@ -90,10 +90,10 @@ function AdminNotification() {
 
 
     const handleAcceptUpdateDocter = async (item) => {
-            setUpdateDocter({ firstname: item.firstname, lastname: item.lastname, email: item.email, phone: item.phone, dob: item.dob, address: item.address,education:item.education, department: item.department, experience: item.experience, fee: item.fee, dr_image: item.dr_image, userId: item.userId, status: "Accepted" })
+            setUpdateDocter({ firstname: item.firstname, lastname: item.lastname, email: item.email, phone: item.phone, dob: item.dob, address: item.address,education:item.education, department: item.department, experience: item.experience, fee: item.fee, dr_image: item.dr_image, userId: item.userId, status: "Accepted" ,messages:"Request has been Approved"})
 
-            const { firstname, lastname, email, phone, dob, address, department,education, experience, fee, dr_image, userId, status } = updateDocter
-            if (!firstname || !lastname || !email || !phone || !dob || !address || !department || !education|| !experience || !fee || !dr_image || !userId || !status ) {
+            const { firstname, lastname, email, phone, dob, address, department,education, experience, fee, dr_image, userId, status ,messages} = updateDocter
+            if (!firstname || !lastname || !email || !phone || !dob || !address || !department || !education|| !experience || !fee || !dr_image || !userId || !status || !messages) {
                 message.warning("Something Went Wrong")
             }
             else {
@@ -111,6 +111,7 @@ function AdminNotification() {
                 reqBody.append("dr_image", dr_image)
                 reqBody.append("userId", userId)
                 reqBody.append("status", status)
+                reqBody.append("messages", messages)
     
                 const reqHeader = {
                     "Content-Type": "application/json", "Authorization": `bearer ${localStorage.getItem("token")}`
@@ -121,7 +122,47 @@ function AdminNotification() {
                         message.success("Application Accepted")
                         handleDocterList()
                         handlePushDeptData(reqBody)
-                        setDocterEditRes(res.data)
+                        setDocterAddRes(res.data)
+                    }
+                    else {
+                        message.error("Failed")
+                    }
+        }
+    }
+ 
+    const handleRejectUpdateDocter = async (item) => {
+            setUpdateDocter({ firstname: item.firstname, lastname: item.lastname, email: item.email, phone: item.phone, dob: item.dob, address: item.address,education:item.education, department: item.department, experience: item.experience, fee: item.fee, dr_image: item.dr_image, userId: item.userId, status: "Rejected" ,messages:"Request has been Rejected"})
+
+            const { firstname, lastname, email, phone, dob, address, department,education, experience, fee, dr_image, userId, status ,messages} = updateDocter
+            if (!firstname || !lastname || !email || !phone || !dob || !address || !department || !education|| !experience || !fee || !dr_image || !userId || !status || !messages) {
+                message.warning("Something Went Wrong")
+            }
+            else {
+                const reqBody = new FormData()
+                reqBody.append("firstname", firstname)
+                reqBody.append("lastname", lastname)
+                reqBody.append("email", email)
+                reqBody.append("phone", phone)
+                reqBody.append("dob", dob)
+                reqBody.append("address", address)
+                reqBody.append("department", department)
+                reqBody.append("experience", experience)
+                reqBody.append("education", education)
+                reqBody.append("fee", fee)
+                reqBody.append("dr_image", dr_image)
+                reqBody.append("userId", userId)
+                reqBody.append("status", status)
+                reqBody.append("messages", messages)
+    
+                const reqHeader = {
+                    "Content-Type": "application/json", "Authorization": `bearer ${localStorage.getItem("token")}`
+                }
+                    const res = await doctersRejectAcceptUpdateApi(reqBody, reqHeader, item._id)
+                    console.log(res);
+                    if (res.status === 200) {
+                        message.success("Application Rejected")
+                        handleDocterList()
+                        handlePushDeptData(reqBody)
                     }
                     else {
                         message.error("Failed")
@@ -162,7 +203,7 @@ function AdminNotification() {
                     <div style={{ backgroundColor: "#fff", paddingTop: "110px" }} className='px-3'>
 
                         <h1 className='text-center py-5 fw-bold' style={{fontSize: "clamp(1.25rem, 0.25rem + 4vw, 2.5rem)"}}>Appoinment Bookings </h1>
-                        <Table responsive striped hover variant="dark">
+                        <Table responsive striped bordered hover variant="dark">
                             <thead >
                                 <tr >
                                     <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>#</th>
@@ -179,7 +220,7 @@ function AdminNotification() {
                                 {
                                     appoinmentRequestList ?
                                         appoinmentRequestList.map((item, index) => (
-                                            <tr key={item._id}>
+                                            <tr>
                                                 <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{index + 1}</td>
                                                 <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.firstname}</td>
                                                 <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.dateofbooked.slice(0, 10)}</td>
@@ -198,7 +239,7 @@ function AdminNotification() {
                         </Table>
 
                         <h1 className='text-center py-5 fw-bold' style={{fontSize: "clamp(1.25rem, 0.25rem + 4vw, 2.5rem)"}}>Docter Application Request</h1>
-                        <Table responsive striped hover variant="dark" className='mb-5'>
+                        <Table responsive striped hover bordered variant="dark" className='mb-5'>
                             <thead >
                                 <tr >
                                     <th className='py-3 text-center' style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>#</th>
@@ -225,8 +266,8 @@ function AdminNotification() {
                                                 <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.experience}</td>
                                                 <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.fee}</td>
                                                 <td style={{fontSize:" clamp(0.5625rem, 0.2625rem + 1.2vw, 0.9375rem)"}}>{item.status}</td>
-                                                <td className='d-flex justify-content-evenly'><Button style={{ backgroundColor: "green", border: "none" }} onClick={() => handleAcceptUpdateDocter(item)}><TiTick /></Button><Button style={{ backgroundColor: "red", border: "none" }} onClick={() => handleDeleteDoctersList(item)}><FaXmark /></Button></td>
-                                                {/* <td className='d-flex justify-content-evenly'><Button style={{ backgroundColor: "green", border: "none" }} onClick={() => handleAcceptUpdateDocter(item)}><TiTick /></Button><Button style={{ backgroundColor: "red", border: "none" }} onClick={() => handleRejectUpdateDocter(item)}><FaXmark /></Button><Button style={{ backgroundColor: "#aa0000", border: "none" }} onClick={() => handleDeleteDoctersList(item)}><MdDeleteOutline /></Button></td> */}
+                                                {/* <td className='d-flex justify-content-evenly'><Button style={{ backgroundColor: "green", border: "none" }} onClick={() => handleAcceptUpdateDocter(item)}><TiTick /></Button><Button style={{ backgroundColor: "red", border: "none" }} onClick={() => handleDeleteDoctersList(item)}><FaXmark /></Button></td> */}
+                                                <td className='d-flex justify-content-evenly'><Button style={{ backgroundColor: "green", border: "none" }} onClick={() => handleAcceptUpdateDocter(item)}><TiTick /></Button><Button style={{ backgroundColor: "red", border: "none" }} onClick={() => handleRejectUpdateDocter(item)}><FaXmark /></Button><Button style={{ backgroundColor: "#aa0000", border: "none" }} onClick={() => handleDeleteDoctersList(item)}><MdDeleteOutline /></Button></td>
                                             </tr>
                                         ))
                                         : ""

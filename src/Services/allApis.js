@@ -29,6 +29,9 @@ export const addAppoinemntsApi = async(data,headers)=>{
 export const getDoctersRequestListApi = async(headers)=>{
     return await commonApi("GET",`${BASE_URL}/admin/getdocterrequest`,'',headers)
 }
+export const getDoctersAcceptedNotificationListApi = async(headers)=>{
+    return await commonApi("GET",`${BASE_URL}/admin/getdocteracceptednotification`,'',headers)
+}
 
 
 export const getDoctersAcceptedApi = async(headers,search)=>{

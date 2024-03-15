@@ -15,11 +15,13 @@ import AdminUsersList from './Components/AdminUsersList';
 import AdminReview from './Components/AdminReview';
 import AdminAuth from './Components/AdminAuth';
 import AdminDrAppoinmentList from './Components/AdminDrAppoinmentList';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {  getDoctersAcceptedApi } from './Services/allApis';
 import EditProfile from './Components/EditProfile';
 import AdminDept from './Components/AdminDept';
 import AdminDeptView from './Components/AdminDeptView';
+import UserNotification from './Components/UserNotification';
+import { docterAddContext } from './Context/ContextShares';
 
 
 function App() {
@@ -27,11 +29,11 @@ function App() {
 
   const [docterList, setDocterList] = useState("")
   const [search,setSearch]=useState("")
-
+  const {docterAddRes, setDocterAddRes}=useContext(docterAddContext)
 
   useEffect(() => {
       handleDocterList()
-  }, [localStorage.getItem("token"),search])
+  }, [localStorage.getItem("token"),search,docterAddRes])
 
   const handleDocterList = async () => {
       const reqHeader = {
@@ -80,6 +82,7 @@ function App() {
       <Route path='/editprofile' element={<EditProfile/>}/>
       <Route path='/adddepartment' element={<AdminDept/>}/>
       <Route path='/departmentview' element={<AdminDeptView/>}/>
+      <Route path='/usernotification' element={<UserNotification/>}/>
       </Routes>
       <Footer />
       <ToastContainer />

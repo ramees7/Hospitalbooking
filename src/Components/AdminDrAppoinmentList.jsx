@@ -3,17 +3,15 @@ import { Col, Row, Table } from 'react-bootstrap'
 import AdminHeader from './AdminHeader'
 import AdminNavbar from './AdminNavbar'
 import { getAppoinmentsListApi } from '../Services/allApis'
-import { docterEditResContext } from '../Context/ContextShares'
 
 
 function AdminDrAppoinmentList({drItem}) {
     const [appoinments, setAppoinments] = useState("")
-    const {docterEditRes,setDocterEditRes}=useContext(docterEditResContext)
 
 
     useEffect(() => {
         handleAppoinmentsList()
-    },[localStorage.getItem("token"),docterEditRes])
+    },[localStorage.getItem("token")])
 
     console.log(drItem);
     const handleAppoinmentsList = async () => {
@@ -37,7 +35,7 @@ function AdminDrAppoinmentList({drItem}) {
                 <Col md={10} xs={8} style={{ backgroundColor: "#fff" }}>
                     <div style={{ backgroundColor: "#fff", paddingTop: "110px" }} className='px-3'>
                         <h1 className='text-center py-5 fw-bold'  style={{fontSize: "clamp(0.9375rem, -0.3125rem + 5vw, 2.5rem)"}}>Dr.{drItem.firstname} {drItem.lastname} bookings</h1>
-                        <Table responsive striped hover variant="dark">
+                        <Table responsive striped bordered hover variant="dark">
                             <thead >
                                 <tr >
                                     <th className='py-3  text-center'  style={{fontSize:" clamp(0.625rem, 0.325rem + 1.2vw, 1rem)"}}>#</th>

@@ -16,7 +16,7 @@ function Home() {
         <div>
             <Header />
            
-            <div style={{ height: "710px ", backgroundColor: "#fff", zIndex: "-1", position: "relative", top: "110px" }}>
+            <div style={{ height: "710px ", zIndex: "-1", position: "relative", top: "110px" }}>
                 <Carousel fade className='w-100  ' >
                     <Carousel.Item>
                         <img src={hospitalImage} alt="" style={{ width: "100vw", height: "600px" }} />

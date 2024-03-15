@@ -8,22 +8,21 @@ import hospital_features_3 from '../Assets/hospital_features_3.jpg'
 import hospital_Features_5 from '../Assets/hospital_features_5.jpg'
 import hospital_features_2 from '../Assets/hospital_features_2.jpg'
 import { Link } from 'react-router-dom';
-import { docterEditResContext } from '../Context/ContextShares';
+import { docterAddContext } from '../Context/ContextShares';
 import HomeDeptView from './HomeDeptView';
 
 
 
 function HomeAbout() {
+    const {docterAddRes, setDocterAddRes}=useContext(docterAddContext)
     const [docterList, setDocterList] = useState("")
     const [search,setSearch]=useState("")
-    // const { docterEditRes, setDocterEditRes } = useContext(docterEditResContext)
-    const {drAdd,setDrAdd}=useContext(docterEditResContext)
 
 
 
     useEffect(() => {
         handleDocterList()
-    }, [localStorage.getItem("token"), drAdd,search])
+    }, [localStorage.getItem("token"), docterAddRes,search])
 
     const handleDocterList = async () => {
         const reqHeader = {
